@@ -38,7 +38,7 @@ class FollowersFragment : Fragment() {
                 append(" ")
                 append(getString(R.string.no_followers_suffix))
             }
-            binding.tvFollowersInfo.visibility = View.VISIBLE
+        binding.tvFollowersInfo.visibility = View.VISIBLE
 
         sharedViewModel.apply {
             followers.observe(this@FollowersFragment) {

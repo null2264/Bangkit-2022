@@ -6,14 +6,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.null2264.githubuser.R
-import io.github.null2264.githubuser.data.TokenViewModelFactory
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.data.detail.DetailViewModelFactory
 import io.github.null2264.githubuser.databinding.ActivityDetailBinding

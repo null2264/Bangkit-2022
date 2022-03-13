@@ -1,8 +1,8 @@
 package io.github.null2264.githubuser.data.main
 
-import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.apollographql.apollo3.exception.ApolloNetworkException
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.UserSearchQuery
