@@ -30,6 +30,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.detailToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         user = intent.getParcelableExtra(DATA)!!
 
@@ -88,6 +89,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
+            onBackPressed()
+            true
+        }
         R.id.share -> {
             val sendIntent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -97,7 +102,7 @@ class DetailActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(sendIntent, null))
             true
         }
-        else -> false
+        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
