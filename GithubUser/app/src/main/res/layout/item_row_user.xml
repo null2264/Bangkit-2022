@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:id="@+id/card_view"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_gravity="center"
+                                   android:layout_marginLeft="4dp"
+                                   android:layout_marginTop="4dp"
+                                   android:layout_marginRight="4dp"
+                                   android:layout_marginBottom="4dp"
+                                   card_view:cardBackgroundColor="@color/cardBackground"
+                                   card_view:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+        
+        <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"
+                android:contentDescription="@string/profile_picture"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/iv_item_avatar"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                card_view:layout_constraintStart_toEndOf="@+id/iv_item_avatar"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/iv_item_avatar"
+                tools:text="Test"
+                android:id="@+id/tv_item_name"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toStartOf="@+id/tv_item_name"
+                card_view:layout_constraintTop_toBottomOf="@+id/tv_item_name"
+                card_view:layout_constraintBottom_toBottomOf="@+id/iv_item_avatar"
+                card_view:drawableStartCompat="@drawable/ic_users"
+                card_view:drawableTint="?attr/colorOnBackground"
+                tools:text="69 followers"
+                android:id="@+id/tv_item_follower"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:textSize="12sp"
+                card_view:layout_constraintStart_toEndOf="@+id/tv_item_follower"
+                card_view:layout_constraintTop_toBottomOf="@+id/tv_item_name"
+                card_view:layout_constraintBottom_toBottomOf="@+id/iv_item_avatar"
+                card_view:drawableStartCompat="@drawable/ic_user"
+                card_view:drawableTint="?attr/colorOnBackground"
+                tools:text="69 following"
+                android:id="@+id/tv_item_following"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

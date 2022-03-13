@@ -1,0 +1,25 @@
+query UserSearch ($query: String!) {
+    search(type: USER, first: 12, query: $query) {
+        nodes {
+            ... on User {
+                login
+                name
+                avatarUrl
+                following (first: 1) {
+                    totalCount
+                }
+                followers (first: 1) {
+                    totalCount
+                }
+                repositories (first: 1) {
+                    totalCount
+                }
+                company
+                location
+            }
+        }
+        pageInfo {
+            hasNextPage
+        }
+    }
+}
