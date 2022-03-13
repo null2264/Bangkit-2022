@@ -1,17 +1,17 @@
 package io.github.null2264.githubuser.data.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.*
 import com.apollographql.apollo3.exception.ApolloNetworkException
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.UserSearchQuery
+import io.github.null2264.githubuser.data.TokenViewModel
 import io.github.null2264.githubuser.lib.User
 import io.github.null2264.githubuser.lib.apolloClient
 import kotlinx.coroutines.launch
 
-class MainUsersViewModel : ViewModel() {
+class MainUsersViewModel(token: String) : TokenViewModel(token) {
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
@@ -21,15 +21,18 @@ class MainUsersViewModel : ViewModel() {
     private val _error = MutableLiveData<Int?>()
     val error: LiveData<Int?> = _error
 
-    fun setToken(token: String) {
-        TOKEN = token
+    init {
+        getUsers()
     }
 
+    fun getLastQuery() = CURRENT_QUERIED_SEARCH
+
     fun getUsers(query: String) {
+        CURRENT_QUERIED_SEARCH = query
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val resp = apolloClient(TOKEN).query(UserSearchQuery(query)).execute().data?.search
+                val resp = apolloClient(getToken()).query(UserSearchQuery(query)).execute().data?.search
                 if (resp != null) {
                     _users.value = resp.nodes?.filter { it?.onUser != null }?.mapNotNull { userNode ->
                         val user = userNode?.onUser!!
@@ -60,7 +63,7 @@ class MainUsersViewModel : ViewModel() {
     }
 
     companion object {
-        private var TOKEN = ""
+        private var CURRENT_QUERIED_SEARCH = ""
         private var LAST_QUERIED_SEARCH = "placeholder"
     }
 }

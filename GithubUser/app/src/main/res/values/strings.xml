@@ -1,14 +1,15 @@
 <resources>
-    <string name="app_name">Github User</string>
+    <string name="app_name" translatable="false">Github User</string>
     <string name="avatar_desc_placeholder">User Avatar</string>
     <string name="option_share">Share</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="use_token">Use token</string>
     <string name="github_personal_token">GitHub Personal Token</string>
     <string name="search">Search</string>
     <string name="detail_tab_followers">Followers</string>
     <string name="detail_tab_following">Following</string>
     <string name="profile_picture">Profile Picture</string>
-    <string name="no_connection">Unable to connect to GitHub</string>
+    <string name="no_connection">Unable to connect to GitHub!</string>
+    <string name="no_users_prefix">We couldn\'t find any users match</string>
+    <string name="no_followers_suffix">doesn\'t have followers yet.</string>
+    <string name="no_following_suffix">isn\'t following anybody.</string>
 </resources>

@@ -7,13 +7,25 @@
         tools:context=".ui.detail.FollowersFragment">
 
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="24sp"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
             android:layout_gravity="top|center"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:text="User doesn't have followers yet"
+            android:id="@+id/tv_followers_info"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_gravity="top|center"
+            android:textSize="20sp"
+            android:gravity="center"
             android:visibility="gone"
             tools:text="ERROR: Something went wrong!"
             android:id="@+id/tv_followers_error"/>

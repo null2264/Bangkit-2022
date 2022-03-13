@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.null2264.githubuser.R
+import io.github.null2264.githubuser.data.TokenViewModelFactory
 import io.github.null2264.githubuser.data.main.MainUsersViewModel
 import io.github.null2264.githubuser.databinding.ActivityMainBinding
 import io.github.null2264.githubuser.lib.User
@@ -26,22 +28,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var searchMenuItem: MenuItem
+    private lateinit var viewModel: MainUsersViewModel
     private var started = false
-    private val viewModel by viewModels<MainUsersViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // TODO: Split to 2 fragment, home fragment and explore fragment
-        // TODO: Use navigation library
-        // TODO: Home/Front page = Viewer's profile maybe?
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         sharedPref = getSharedPreferences("GITHUB_TOKEN", MODE_PRIVATE)
-        if (getToken(sharedPref) == null)
+        if (getToken(sharedPref) == null && !started)
             startActivity(Intent(this, AuthActivity::class.java))
         else
             actuallyStart()
@@ -64,13 +62,19 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvUsers.setHasFixedSize(true)
 
+        val factory = TokenViewModelFactory(getToken(sharedPref)!!)
+        viewModel = ViewModelProvider(this, factory)[MainUsersViewModel::class.java]
         viewModel.apply {
-            // Init
-            setToken(getToken(sharedPref)!!)
-            getUsers()
-
             users.observe(this@MainActivity) {
                 showRecyclerList(it)
+                if (it.isEmpty()) {
+                    binding.tvMainInfo.text = buildString {
+                        append(getString(R.string.no_users_prefix))
+                        append(" '${getLastQuery()}'")
+                    }
+                    binding.rvUsers.visibility = View.INVISIBLE
+                }
+                binding.tvMainInfo.visibility = if (it.isNotEmpty()) View.GONE else View.VISIBLE
             }
 
             isLoading.observe(this@MainActivity) {
@@ -84,15 +88,18 @@ class MainActivity : AppCompatActivity() {
 
             error.observe(this@MainActivity) {
                 binding.apply {
-                    if (it != null)
+                    if (it != null) {
                         tvMainError.apply {
                             visibility = View.VISIBLE
                             text = StringBuilder("ERROR: ").append(getString(it))
                         }
-                    else
+                        rvUsers.visibility = View.GONE
+                    } else {
                         tvMainError.apply {
                             visibility = View.GONE
                         }
+                        rvUsers.visibility = View.VISIBLE
+                    }
                 }
             }
         }

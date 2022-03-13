@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="avatar_desc_placeholder">Foto Pengguna</string>
+    <string name="option_share">Bagikan</string>
+    <string name="use_token">Gunakan token</string>
+    <string name="github_personal_token">Token Personal GitHub</string>
+    <string name="search">Cari</string>
+    <string name="detail_tab_followers">Pengikut</string>
+    <string name="detail_tab_following">Mengikuti</string>
+    <string name="profile_picture">Foto Profil</string>
+    <string name="no_connection">Tidak dapat terhubung ke GitHub!</string>
+    <string name="no_users_prefix">Kami tidak dapat menemukan pengguna dengan nama</string>
+    <string name="no_followers_suffix">belum mempunyai pengikuti.</string>
+    <string name="no_following_suffix">tidak mengikuti siapa pun.</string>
+</resources>

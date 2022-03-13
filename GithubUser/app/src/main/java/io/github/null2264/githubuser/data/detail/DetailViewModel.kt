@@ -1,5 +1,8 @@
 package io.github.null2264.githubuser.data.detail
 
+import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,11 +10,12 @@ import androidx.lifecycle.viewModelScope
 import com.apollographql.apollo3.exception.ApolloHttpException
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.UserDetailsQuery
+import io.github.null2264.githubuser.data.TokenViewModel
 import io.github.null2264.githubuser.lib.User
 import io.github.null2264.githubuser.lib.apolloClient
 import kotlinx.coroutines.launch
 
-class DetailViewModel() : ViewModel() {
+class DetailViewModel(token: String, private val user: User) : TokenViewModel(token) {
     private val _following = MutableLiveData<List<User>>()
     val following: LiveData<List<User>> = _following
 
@@ -24,19 +28,18 @@ class DetailViewModel() : ViewModel() {
     private val _error = MutableLiveData<Int?>()
     val error: LiveData<Int?> = _error
 
-    fun setToken(token: String) {
-        TOKEN = token
-    }
-
-    fun setTarget(username: String) {
-        USERNAME = username
+    init {
+        getFollows()
     }
 
     fun getFollows() {
+        if (user.followers < 1 && user.following < 1)
+            return
+
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val resp = apolloClient(TOKEN).query(UserDetailsQuery(USERNAME)).execute().data?.user
+                val resp = apolloClient(getToken()).query(UserDetailsQuery(user.username)).execute().data?.user
                 if (resp != null) {
                     // If you have any idea on how to make this not duplicate, please let me this part driving me nuts
                     _following.value = resp.following.nodes?.filterNotNull()?.map { user ->
@@ -70,10 +73,5 @@ class DetailViewModel() : ViewModel() {
                 _isLoading.value = false
             }
         }
-    }
-
-    companion object {
-        private var TOKEN = ""
-        private var USERNAME = ""
     }
 }

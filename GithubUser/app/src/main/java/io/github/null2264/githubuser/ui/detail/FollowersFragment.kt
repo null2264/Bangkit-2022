@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.databinding.FragmentFollowersBinding
 import io.github.null2264.githubuser.lib.User
@@ -30,30 +31,48 @@ class FollowersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val user = (activity as DetailActivity).user
+        if (user.followers < 1)
+            binding.tvFollowersInfo.text = buildString {
+                append(user.name ?: user.username)
+                append(" ")
+                append(getString(R.string.no_followers_suffix))
+            }
+            binding.tvFollowersInfo.visibility = View.VISIBLE
+
         sharedViewModel.apply {
             followers.observe(this@FollowersFragment) {
-                showRecyclerList(it)
+                if (it.isNotEmpty())
+                    showRecyclerList(it)
             }
             isLoading.observe(this@FollowersFragment) {
                 binding.refreshFollowers.isRefreshing = it
             }
             error.observe(this@FollowersFragment) {
                 binding.apply {
-                    if (it != null)
+                    if (it != null) {
                         tvFollowersError.apply {
                             visibility = View.VISIBLE
                             text = StringBuilder("ERROR: ").append(getString(it))
                         }
-                    else
+                        rvFollowers.visibility = View.GONE
+                    } else {
                         tvFollowersError.apply {
                             visibility = View.GONE
                         }
+                        rvFollowers.visibility = View.VISIBLE
+                    }
                 }
             }
         }
 
-        binding.refreshFollowers.setOnRefreshListener {
-            sharedViewModel.getFollows()
+        binding.refreshFollowers.apply {
+            setOnRefreshListener {
+                if (user.followers >= 1)
+                    sharedViewModel.getFollows()
+                else
+                    this.isRefreshing = false
+            }
         }
     }
 

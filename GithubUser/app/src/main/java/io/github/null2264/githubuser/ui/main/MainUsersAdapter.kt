@@ -22,18 +22,24 @@ class MainUsersAdapter(private val users: List<User>) :
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val user = users[position]
-        Glide.with(holder.itemView.context)
-            .asBitmap()
-            .load(user.avatar)
-            .circleCrop()
-            .into(holder.binding.ivItemAvatar)
-        holder.binding.tvItemName.text = user.name ?: user.username
-        holder.binding.tvItemFollower.text = StringBuilder(user.followers.toString())
-            .append(" followers")
-        holder.binding.tvItemFollowing.text = StringBuilder(user.following.toString())
-            .append(" following")
-        holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(users[holder.adapterPosition])
+        holder.apply {
+            Glide.with(itemView.context)
+                .asBitmap()
+                .load(user.avatar)
+                .circleCrop()
+                .into(binding.ivItemAvatar)
+
+            binding.apply {
+                tvItemName.text = user.name ?: user.username
+                tvItemFollower.text = StringBuilder(user.followers.toString())
+                    .append(" followers")
+                tvItemFollowing.text = StringBuilder(user.following.toString())
+                    .append(" following")
+            }
+
+            itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(users[adapterPosition])
+            }
         }
     }
 

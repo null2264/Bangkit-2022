@@ -9,10 +9,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.null2264.githubuser.R
+import io.github.null2264.githubuser.data.TokenViewModelFactory
 import io.github.null2264.githubuser.data.detail.DetailViewModel
+import io.github.null2264.githubuser.data.detail.DetailViewModelFactory
 import io.github.null2264.githubuser.databinding.ActivityDetailBinding
 import io.github.null2264.githubuser.lib.User
 import io.github.null2264.githubuser.lib.getToken
@@ -20,8 +23,8 @@ import io.github.null2264.githubuser.lib.getToken
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var sharedPref: SharedPreferences
-    private lateinit var user: User
-    private val viewModel by viewModels<DetailViewModel>()
+    private lateinit var viewModel: DetailViewModel
+    lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,14 +79,9 @@ class DetailActivity : AppCompatActivity() {
         }
 
         sharedPref = getSharedPreferences("GITHUB_TOKEN", MODE_PRIVATE)
-        viewModel.apply {
-            setToken(getToken(sharedPref)!!)
-            setTarget(user.username)
 
-            // Save unnecessary request when user have no followers/following
-            if (user.followers >= 1 || user.following >= 1)
-                getFollows()
-        }
+        val factory = DetailViewModelFactory(getToken(sharedPref)!!, user)
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
