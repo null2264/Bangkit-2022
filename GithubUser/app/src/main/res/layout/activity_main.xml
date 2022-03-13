@@ -24,13 +24,11 @@
             android:layout_marginHorizontal="16dp"
             android:textSize="20sp"
             android:gravity="center"
-            android:visibility="gone"
+            android:text="@string/greeting"
             app:layout_constraintTop_toBottomOf="@id/main_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"
-            tools:text="We couldn't find any users match 'userthatdoesntexists'"
             android:id="@+id/tv_main_info"/>
 
     <TextView

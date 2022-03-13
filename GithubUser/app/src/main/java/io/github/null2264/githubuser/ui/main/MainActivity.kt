@@ -66,13 +66,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.apply {
             users.observe(this@MainActivity) {
                 showRecyclerList(it)
-                if (it.isEmpty()) {
+                if (it.isEmpty())
                     binding.tvMainInfo.text = buildString {
                         append(getString(R.string.no_users_prefix))
-                        append(" '${getLastQuery()}'")
+                        append(" '${getCurrentQuery()}'")
                     }
-                    binding.rvUsers.visibility = View.INVISIBLE
-                }
                 binding.tvMainInfo.visibility = if (it.isNotEmpty()) View.GONE else View.VISIBLE
             }
 
@@ -81,7 +79,12 @@ class MainActivity : AppCompatActivity() {
                     if (refreshMain.isRefreshing)
                         refreshMain.isRefreshing = it
                     else
-                        pbMainLoading.visibility = if (it == false) View.GONE else View.VISIBLE
+                        if (it == true) {
+                            pbMainLoading.visibility = View.VISIBLE
+                            tvMainError.visibility = View.GONE
+                            tvMainInfo.visibility = View.GONE
+                        } else
+                            pbMainLoading.visibility = View.GONE
                 }
             }
 

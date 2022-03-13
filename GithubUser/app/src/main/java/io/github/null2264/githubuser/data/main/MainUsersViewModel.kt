@@ -21,15 +21,15 @@ class MainUsersViewModel(token: String) : TokenViewModel(token) {
     private val _error = MutableLiveData<Int?>()
     val error: LiveData<Int?> = _error
 
-    init {
-        getUsers()
-    }
-
-    fun getLastQuery() = CURRENT_QUERIED_SEARCH
+    fun getCurrentQuery() = CURRENT_QUERIED_SEARCH
 
     fun getUsers(query: String) {
         CURRENT_QUERIED_SEARCH = query
         _isLoading.value = true
+        if (query == "") {
+            _isLoading.value = false
+            return
+        }
         viewModelScope.launch {
             try {
                 val resp = apolloClient(getToken()).query(UserSearchQuery(query)).execute().data?.search
@@ -58,12 +58,10 @@ class MainUsersViewModel(token: String) : TokenViewModel(token) {
         }
     }
 
-    fun getUsers() {
-        getUsers(LAST_QUERIED_SEARCH)
-    }
+    fun getUsers() = getUsers(LAST_QUERIED_SEARCH)
 
     companion object {
         private var CURRENT_QUERIED_SEARCH = ""
-        private var LAST_QUERIED_SEARCH = "placeholder"
+        private var LAST_QUERIED_SEARCH = ""
     }
 }

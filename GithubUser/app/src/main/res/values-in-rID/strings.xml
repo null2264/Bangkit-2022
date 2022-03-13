@@ -12,4 +12,5 @@
     <string name="no_users_prefix">Kami tidak dapat menemukan pengguna dengan nama</string>
     <string name="no_followers_suffix">belum mempunyai pengikuti.</string>
     <string name="no_following_suffix">tidak mengikuti siapa pun.</string>
+    <string name="greeting">Selamat Datang di GitHub User\nSilahkan tekan icon pencarian untuk mulai mencari.</string>
 </resources>
