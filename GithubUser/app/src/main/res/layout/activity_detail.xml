@@ -16,126 +16,136 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:id="@+id/detail_appbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:theme="@style/ThemeOverlay.GithubUser.ActionBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-                android:paddingBottom="16dp">
+                app:titleEnabled="false"
+                app:titleCollapseMode="scale"
+                android:layout_height="wrap_content">
 
-            <!-- TODO: Find a way to make Toolbar not collapsed on scroll -->
-            <androidx.appcompat.widget.Toolbar
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|snap|enterAlwaysCollapsed"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="56dp"
+                    android:paddingBottom="16dp"
+                    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+                <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:contentDescription="@string/avatar_desc_placeholder"
+                        android:id="@+id/iv_detail_avatar"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="8dp"
+                        android:textSize="22sp"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_detail_avatar"
+                        app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
+                        tools:text="That Is Some Loooong Name"
+                        android:id="@+id/tv_detail_name"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="19dp"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        style="@style/Subtitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_name"
+                        app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
+                        tools:text="veryniceusername69420"
+                        android:id="@+id/tv_detail_username"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_username"
+                        app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
+                        app:drawableStartCompat="@drawable/ic_map_pin"
+                        tools:text="Island, Earth"
+                        android:id="@+id/tv_detail_location"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
+                        app:drawableStartCompat="@drawable/ic_briefcase"
+                        tools:text="\@IdkM8"
+                        android:id="@+id/tv_detail_company"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginTop="8dp"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_detail_company"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_detail_follower"
+                        app:drawableStartCompat="@drawable/ic_archive"
+                        tools:text="69"
+                        android:id="@+id/tv_detail_repository"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/tv_detail_repository"
+                        app:layout_constraintTop_toTopOf="@+id/tv_detail_repository"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_detail_following"
+                        app:drawableStartCompat="@drawable/ic_users"
+                        tools:text="69 followers"
+                        android:id="@+id/tv_detail_follower"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/tv_detail_follower"
+                        app:layout_constraintTop_toTopOf="@+id/tv_detail_follower"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
+                        app:drawableStartCompat="@drawable/ic_user"
+                        tools:text="69 following"
+                        android:id="@+id/tv_detail_following"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                    android:background="?attr/colorPrimaryVariant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="pin"
                     tools:title="Hello World"
                     android:id="@+id/detail_toolbar"/>
 
-            <ImageView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/detail_toolbar"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:contentDescription="@string/avatar_desc_placeholder"
-                    android:id="@+id/iv_detail_avatar"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginHorizontal="8dp"
-                    android:textSize="22sp"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_detail_avatar"
-                    app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
-                    tools:text="That Is Some Loooong Name"
-                    android:id="@+id/tv_detail_name"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="19dp"
-                    android:layout_marginTop="4dp"
-                    android:textSize="14sp"
-                    style="@style/Subtitle"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_name"
-                    app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
-                    tools:text="veryniceusername69420"
-                    android:id="@+id/tv_detail_username"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_username"
-                    app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
-                    app:drawableStartCompat="@drawable/ic_map_pin"
-                    tools:text="Island, Earth"
-                    android:id="@+id/tv_detail_location"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
-                    app:drawableStartCompat="@drawable/ic_briefcase"
-                    tools:text="\@IdkM8"
-                    android:id="@+id/tv_detail_company"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginTop="8dp"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_company"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_detail_follower"
-                    app:drawableStartCompat="@drawable/ic_archive"
-                    tools:text="69"
-                    android:id="@+id/tv_detail_repository"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toEndOf="@+id/tv_detail_repository"
-                    app:layout_constraintTop_toTopOf="@+id/tv_detail_repository"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_detail_following"
-                    app:drawableStartCompat="@drawable/ic_users"
-                    tools:text="69 followers"
-                    android:id="@+id/tv_detail_follower"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toEndOf="@+id/tv_detail_follower"
-                    app:layout_constraintTop_toTopOf="@+id/tv_detail_follower"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
-                    app:drawableStartCompat="@drawable/ic_user"
-                    tools:text="69 following"
-                    android:id="@+id/tv_detail_following"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
