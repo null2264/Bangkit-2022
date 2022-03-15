@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.detailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        user = intent.getParcelableExtra(DATA)!!
+        user = intent.getParcelableExtra("USER_DATA")!!
 
         Glide.with(this)
             .asBitmap()
@@ -106,8 +106,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val DATA = "extra_data"
-
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.detail_tab_followers,

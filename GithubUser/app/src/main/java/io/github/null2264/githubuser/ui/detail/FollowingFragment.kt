@@ -1,19 +1,14 @@
 package io.github.null2264.githubuser.ui.detail
 
-import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.databinding.FragmentFollowingBinding
-import io.github.null2264.githubuser.lib.User
 
 class FollowingFragment : Fragment() {
     private var _binding: FragmentFollowingBinding? = null
@@ -42,10 +37,14 @@ class FollowingFragment : Fragment() {
         }
 
         sharedViewModel.apply {
-            following.observe(this@FollowingFragment) {
-                if (it.isNotEmpty())
-                    showRecyclerList(it)
-            }
+            showRecyclerList(
+                context,
+                DetailActivity::class.java,
+                this@FollowingFragment,
+                binding.rvFollowing,
+                following
+            )
+
             isLoading.observe(this@FollowingFragment) {
                 binding.refreshFollowing.isRefreshing = it
             }
@@ -80,22 +79,5 @@ class FollowingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun showRecyclerList(users: List<User>) {
-        if (context!!.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
-            binding.rvFollowing.layoutManager = GridLayoutManager(context, 2)
-        else
-            binding.rvFollowing.layoutManager = LinearLayoutManager(context)
-
-        val mainUsersAdapter = DetailFollowsAdapter(users)
-        binding.rvFollowing.adapter = mainUsersAdapter
-
-        mainUsersAdapter.setOnItemClickCallback(object : DetailFollowsAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: User) {
-                startActivity(Intent(context, DetailActivity::class.java)
-                    .putExtra(DetailActivity.DATA, data))
-            }
-        })
     }
 }

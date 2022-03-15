@@ -1,3 +1,8 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.konan.properties.hasProperty
+
+val localProperties = gradleLocalProperties(rootDir)
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -20,6 +25,16 @@ android {
     }
 
     buildTypes {
+        named("debug") {
+            // Default value is set to \"\" because defaultValue's type is not handled for some reason
+            buildConfigField("String", "clientId", localProperties.getProperty("clientId", "\"\""))
+            buildConfigField("String", "clientSecret", localProperties.getProperty("clientSecret", "\"\""))
+
+            resValue("string", "redirect_scheme",
+                localProperties.getProperty("redirectScheme", "null2264.githubuser"))
+            buildConfigField("String", "redirectScheme",
+                localProperties.getProperty("redirectScheme", "\"null2264.githubuser\""))
+        }
         named("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -51,6 +66,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+    implementation("androidx.browser:browser:1.4.0")
 
     // Android Material
     implementation("com.google.android.material:material:1.5.0")
@@ -66,6 +82,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.13.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.1")
+
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // test unit
     testImplementation("junit:junit:4.13.2")

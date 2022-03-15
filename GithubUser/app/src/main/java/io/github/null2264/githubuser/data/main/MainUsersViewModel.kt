@@ -8,7 +8,7 @@ import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.UserSearchQuery
 import io.github.null2264.githubuser.data.TokenViewModel
 import io.github.null2264.githubuser.lib.User
-import io.github.null2264.githubuser.lib.apolloClient
+import io.github.null2264.githubuser.lib.api.apolloClient
 import kotlinx.coroutines.launch
 
 class MainUsersViewModel(token: String) : TokenViewModel(token) {
@@ -37,6 +37,7 @@ class MainUsersViewModel(token: String) : TokenViewModel(token) {
                     _users.value = resp.nodes?.filter { it?.onUser != null }?.mapNotNull { userNode ->
                         val user = userNode?.onUser!!
                         User(
+                            user.id,
                             user.login,
                             user.name,
                             user.avatarUrl as String,

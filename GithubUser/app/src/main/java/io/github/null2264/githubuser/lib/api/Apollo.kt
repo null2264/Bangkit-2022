@@ -1,4 +1,4 @@
-package io.github.null2264.githubuser.lib
+package io.github.null2264.githubuser.lib.api
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient

@@ -2,6 +2,7 @@ query UserDetails ($login: String!){
     user (login: $login) {
         following (first: 12) {
             nodes {
+                id
                 login
                 name
                 avatarUrl
@@ -20,6 +21,7 @@ query UserDetails ($login: String!){
         }
         followers (first: 12) {
             nodes {
+                id
                 login
                 name
                 avatarUrl

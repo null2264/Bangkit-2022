@@ -2,14 +2,17 @@ package io.github.null2264.githubuser.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.github.null2264.githubuser.databinding.ItemRowUserBinding
 import io.github.null2264.githubuser.lib.User
+import io.github.null2264.githubuser.lib.UserDiffCallback
 
-class MainUsersAdapter(private val users: List<User>) :
+class MainUsersAdapter :
     RecyclerView.Adapter<MainUsersAdapter.ListViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
+    private var users: List<User> = listOf()
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
@@ -41,6 +44,13 @@ class MainUsersAdapter(private val users: List<User>) :
                 onItemClickCallback.onItemClicked(users[adapterPosition])
             }
         }
+    }
+
+    fun setList(newUsers: List<User>) {
+        val diffCallback = UserDiffCallback(users, newUsers)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        users = newUsers
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int = users.size

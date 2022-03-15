@@ -12,6 +12,14 @@ fun getToken(sharedPref: SharedPreferences): String? {
     return sharedPref.getString("token", null)
 }
 
+fun setToken(
+    sharedPref: SharedPreferences,
+    token: String,
+): Boolean {
+    sharedPref.edit().putString("token", token).apply()
+    return true
+}
+
 suspend fun setToken(
     apolloClient: ApolloClient,
     sharedPref: SharedPreferences,

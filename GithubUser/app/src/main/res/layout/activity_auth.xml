@@ -26,10 +26,17 @@
             android:id="@+id/btn_auth_use"
             tools:ignore="MissingConstraints"/>
 
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_via_oauth"
+            android:id="@+id/btn_auth_oauth"
+            tools:ignore="MissingConstraints"/>
+
     <androidx.constraintlayout.helper.widget.Flow
             app:flow_horizontalAlign="center"
             app:flow_verticalGap="16dp"
-            app:constraint_referenced_ids="et_auth_token, btn_auth_use"
+            app:constraint_referenced_ids="et_auth_token, btn_auth_use, btn_auth_oauth"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,4 +45,5 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:orientation="vertical"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

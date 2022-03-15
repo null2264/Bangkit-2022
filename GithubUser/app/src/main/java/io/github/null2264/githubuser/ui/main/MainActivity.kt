@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,8 +65,8 @@ class MainActivity : AppCompatActivity() {
         val factory = TokenViewModelFactory(getToken(sharedPref)!!)
         viewModel = ViewModelProvider(this, factory)[MainUsersViewModel::class.java]
         viewModel.apply {
+            showRecyclerList(users)
             users.observe(this@MainActivity) {
-                showRecyclerList(it)
                 if (it.isEmpty())
                     binding.tvMainInfo.text = buildString {
                         append(getString(R.string.no_users_prefix))
@@ -134,19 +135,23 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun showRecyclerList(users: List<User>) {
+    private fun showRecyclerList(users: LiveData<List<User>>) {
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
             binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
         else
             binding.rvUsers.layoutManager = LinearLayoutManager(this)
 
-        val mainUsersAdapter = MainUsersAdapter(users)
+        val mainUsersAdapter = MainUsersAdapter()
         binding.rvUsers.adapter = mainUsersAdapter
+
+        users.observe(this@MainActivity) { newList ->
+            mainUsersAdapter.setList(newList)
+        }
 
         mainUsersAdapter.setOnItemClickCallback(object : MainUsersAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
                 startActivity(Intent(this@MainActivity, DetailActivity::class.java)
-                    .putExtra(DetailActivity.DATA, data))
+                    .putExtra("USER_DATA", data))
             }
         })
     }

@@ -2,6 +2,7 @@ query UserSearch ($query: String!) {
     search(type: USER, first: 12, query: $query) {
         nodes {
             ... on User {
+                id
                 login
                 name
                 avatarUrl
