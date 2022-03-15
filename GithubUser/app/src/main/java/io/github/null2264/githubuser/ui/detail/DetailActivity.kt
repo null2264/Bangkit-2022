@@ -15,8 +15,9 @@ import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.data.detail.DetailViewModelFactory
 import io.github.null2264.githubuser.databinding.ActivityDetailBinding
+import io.github.null2264.githubuser.lib.Common
+import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.lib.User
-import io.github.null2264.githubuser.lib.getToken
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -79,7 +80,7 @@ class DetailActivity : AppCompatActivity() {
 
         sharedPref = getSharedPreferences("GITHUB_TOKEN", MODE_PRIVATE)
 
-        val factory = DetailViewModelFactory(getToken(sharedPref)!!, user)
+        val factory = DetailViewModelFactory(Token.fromSharedPreference(sharedPref)!!.token, user)
         viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
     }
 
@@ -96,7 +97,7 @@ class DetailActivity : AppCompatActivity() {
         R.id.share -> {
             val sendIntent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "https://www.github.com/${user.username}")
+                putExtra(Intent.EXTRA_TEXT, Common.GITHUB_BASE_URL + user.username)
                 type = "text/plain"
             }
             startActivity(Intent.createChooser(sendIntent, null))

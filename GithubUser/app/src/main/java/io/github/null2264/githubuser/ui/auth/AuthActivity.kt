@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.lifecycleScope
@@ -14,8 +13,6 @@ import io.github.null2264.githubuser.BuildConfig
 import io.github.null2264.githubuser.databinding.ActivityAuthBinding
 import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.lib.api.OAuthConfig
-import io.github.null2264.githubuser.lib.api.apolloClient
-import io.github.null2264.githubuser.lib.setToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,18 +21,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AuthActivity : AppCompatActivity() {
-    // Placeholder for OAuth
-    // TODO: Make the actual OAuth if i have enough time
     private lateinit var binding: ActivityAuthBinding
     private lateinit var sharedPref: SharedPreferences
-    private lateinit var webView: WebView
-
-    companion object {
-        private const val GITHUB_OAUTH_URL = "https://github.com/login/oauth/"
-        private const val CLIENT_ID = BuildConfig.clientId
-        private const val CLIENT_SECRET = BuildConfig.clientSecret
-        private const val REDIRECT_URI = "${BuildConfig.redirectScheme}://callback"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,24 +45,24 @@ class AuthActivity : AppCompatActivity() {
 
         binding.apply {
             btnAuthUse.setOnClickListener {
-                if (binding.etAuthToken.text.isEmpty()) {
-                    binding.etAuthToken.error = "Token can't be empty!"
+                if (etAuthToken.text.isEmpty()) {
+                    etAuthToken.error = "Token can't be empty!"
                 } else {
-                    binding.btnAuthUse.isEnabled = false
-                    val token = binding.etAuthToken.text.toString()
-                    val client = apolloClient(token)
+                    btnAuthUse.isEnabled = false
+                    val token = Token("bearer", etAuthToken.text.toString())
 
                     lifecycleScope.launch {
-                        val isSuccess =
-                            setToken(
-                                apolloClient = client,
-                                sharedPref = sharedPref,
-                                editText = binding.etAuthToken
-                            )
+                        val isValid = token.validateToken()
                         withContext(Dispatchers.Main) {
-                            binding.btnAuthUse.isEnabled = true
-                            if (isSuccess)
+                            btnAuthUse.isEnabled = true
+                            if (isValid) {
+                                token.toSharedPreference(sharedPref)
                                 finish()
+                            } else {
+                                withContext(Dispatchers.Main) {
+                                    etAuthToken.error = "Invalid token!"
+                                }
+                            }
                         }
                     }
                 }
@@ -106,7 +93,7 @@ class AuthActivity : AppCompatActivity() {
                 if (!response.isSuccessful || response.body() == null)
                     return
 
-                setToken(sharedPref, response.body()!!.key)
+                response.body()!!.toSharedPreference(sharedPref)
                 finish()
             }
 
@@ -118,5 +105,12 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finishAffinity()
+    }
+
+    companion object {
+        private const val GITHUB_OAUTH_URL = "https://github.com/login/oauth/"
+        private const val CLIENT_ID = BuildConfig.clientId
+        private const val CLIENT_SECRET = BuildConfig.clientSecret
+        private const val REDIRECT_URI = "${BuildConfig.redirectScheme}://callback"
     }
 }

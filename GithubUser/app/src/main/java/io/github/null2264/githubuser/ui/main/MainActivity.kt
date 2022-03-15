@@ -19,8 +19,8 @@ import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.TokenViewModelFactory
 import io.github.null2264.githubuser.data.main.MainUsersViewModel
 import io.github.null2264.githubuser.databinding.ActivityMainBinding
+import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.lib.User
-import io.github.null2264.githubuser.lib.getToken
 import io.github.null2264.githubuser.ui.auth.AuthActivity
 import io.github.null2264.githubuser.ui.detail.DetailActivity
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPref = getSharedPreferences("GITHUB_TOKEN", MODE_PRIVATE)
-        if (getToken(sharedPref) == null && !started)
+        if (Token.fromSharedPreference(sharedPref) == null && !started)
             startActivity(Intent(this, AuthActivity::class.java))
         else
             actuallyStart()
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvUsers.setHasFixedSize(true)
 
-        val factory = TokenViewModelFactory(getToken(sharedPref)!!)
+        val factory = TokenViewModelFactory(Token.fromSharedPreference(sharedPref)!!.token)
         viewModel = ViewModelProvider(this, factory)[MainUsersViewModel::class.java]
         viewModel.apply {
             showRecyclerList(users)
