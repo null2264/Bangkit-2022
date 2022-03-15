@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.databinding.FragmentFollowingBinding
+import io.github.null2264.githubuser.ui.detail.FragmentCommon.Companion.showRecyclerList
 
 class FollowingFragment : Fragment() {
     private var _binding: FragmentFollowingBinding? = null

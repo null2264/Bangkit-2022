@@ -40,7 +40,7 @@ class DetailFollowsAdapter :
                     .append(" following")
             }
             itemView.setOnClickListener {
-                onItemClickCallback.onItemClicked(users[holder.adapterPosition])
+                onItemClickCallback.onItemClicked(users[adapterPosition])
             }
         }
     }
