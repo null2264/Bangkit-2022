@@ -36,10 +36,12 @@
                 android:layout_marginEnd="8dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1"
                 card_view:layout_constraintStart_toEndOf="@+id/iv_item_avatar"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="@+id/iv_item_avatar"
-                tools:text="Test"
+                tools:text="A long name that will make a new line and causes trouble"
                 android:id="@+id/tv_item_name"/>
 
         <TextView
