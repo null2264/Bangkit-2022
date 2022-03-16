@@ -2,7 +2,6 @@ package io.github.null2264.githubuser.ui.main
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,20 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.TokenViewModelFactory
 import io.github.null2264.githubuser.data.main.MainUsersViewModel
 import io.github.null2264.githubuser.databinding.ActivityMainBinding
 import io.github.null2264.githubuser.lib.Token
-import io.github.null2264.githubuser.lib.User
 import io.github.null2264.githubuser.ui.auth.AuthActivity
 import io.github.null2264.githubuser.ui.detail.DetailActivity
+import io.github.null2264.githubuser.data.UsersRecyclerInterface
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UsersRecyclerInterface {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var searchMenuItem: MenuItem
@@ -65,7 +61,13 @@ class MainActivity : AppCompatActivity() {
         val factory = TokenViewModelFactory(Token.fromSharedPreference(sharedPref)!!.token)
         viewModel = ViewModelProvider(this, factory)[MainUsersViewModel::class.java]
         viewModel.apply {
-            showRecyclerList(users)
+            showRecyclerList(
+                applicationContext,
+                this@MainActivity,
+                binding.rvUsers,
+                users
+            )
+
             users.observe(this@MainActivity) {
                 if (it.isEmpty())
                     binding.tvMainInfo.text = buildString {
@@ -133,26 +135,5 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return true
-    }
-
-    private fun showRecyclerList(users: LiveData<List<User>>) {
-        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
-            binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
-        else
-            binding.rvUsers.layoutManager = LinearLayoutManager(this)
-
-        val mainUsersAdapter = MainUsersAdapter()
-        binding.rvUsers.adapter = mainUsersAdapter
-
-        users.observe(this@MainActivity) { newList ->
-            mainUsersAdapter.setList(newList)
-        }
-
-        mainUsersAdapter.setOnItemClickCallback(object : MainUsersAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: User) {
-                startActivity(Intent(this@MainActivity, DetailActivity::class.java)
-                    .putExtra("USER_DATA", data))
-            }
-        })
     }
 }

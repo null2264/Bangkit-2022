@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import io.github.null2264.githubuser.R
+import io.github.null2264.githubuser.data.UsersRecyclerInterface
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.databinding.FragmentFollowersBinding
-import io.github.null2264.githubuser.ui.detail.FragmentCommon.Companion.showRecyclerList
 
-class FollowersFragment : Fragment() {
+class FollowersFragment : Fragment(), UsersRecyclerInterface {
     private var _binding: FragmentFollowersBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel by activityViewModels<DetailViewModel>()
@@ -39,7 +39,6 @@ class FollowersFragment : Fragment() {
         sharedViewModel.apply {
             showRecyclerList(
                 context,
-                DetailActivity::class.java,
                 this@FollowersFragment,
                 binding.rvFollowers,
                 followers
