@@ -1,11 +1,13 @@
 package io.github.null2264.githubuser.ui.detail
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +44,19 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivDetailAvatar)
 
         binding.apply {
+            ivDetailAvatar.setOnClickListener {
+                val dialog = Dialog(this@DetailActivity)
+                dialog.setContentView(R.layout.avatar_dialog)
+
+                Glide.with(dialog.context)
+                    .asBitmap()
+                    .load(user.avatar)
+                    .circleCrop()
+                    .into(dialog.findViewById(R.id.iv_dialog_avatar))
+
+                dialog.show()
+            }
+
             if (user.name == null) {
                 tvDetailName.text = user.username
                 tvDetailUsername.visibility = View.GONE
