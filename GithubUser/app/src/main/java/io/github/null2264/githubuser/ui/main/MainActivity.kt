@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.updateMarginsRelative
 import androidx.lifecycle.ViewModelProvider
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.TokenViewModelFactory
 import io.github.null2264.githubuser.data.UsersRecyclerInterface
@@ -20,19 +23,16 @@ import io.github.null2264.githubuser.databinding.ActivityMainBinding
 import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.ui.auth.AuthActivity
 
-class MainActivity : AppCompatActivity(), UsersRecyclerInterface {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : AppCompatActivity(R.layout.activity_main), UsersRecyclerInterface {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var viewModel: MainUsersViewModel
     private var started = false
+    private val binding by viewBinding<ActivityMainBinding>(CreateMethod.INFLATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.mainToolbar.requestFocus()
 
         sharedPref = getSharedPreferences("GITHUB_TOKEN", MODE_PRIVATE)
         if (Token.fromSharedPreference(sharedPref) == null && !started)
@@ -114,32 +114,37 @@ class MainActivity : AppCompatActivity(), UsersRecyclerInterface {
                 viewModel.getUsers()
             }
 
-            svMain.setIconifiedByDefault(false)
-            // Stupid "bug" or behaviour where SearchView won't clear focus with just clearFocus()
-            svMain.isFocusedByDefault = false
-            svMain.focusable = View.NOT_FOCUSABLE
-            svMain.clearFocus()
+            svMain.apply {
+                setIconifiedByDefault(false)
+                // Stupid "bug" or behaviour where SearchView won't clear focus with just clearFocus()
+                isFocusedByDefault = false
+                focusable = View.NOT_FOCUSABLE
+                clearFocus()
 
-            svMain.setOnQueryTextFocusChangeListener { _, hasFocus ->
-                val marginEnd = if (hasFocus) 18 else 10
-                val params = svMain.layoutParams as MarginLayoutParams
-                params.updateMarginsRelative(end = marginEnd.px)
-                svMain.layoutParams = params
-                mainToolbar.menu.setGroupVisible(R.id.main_menu_group, !hasFocus)
-            }
-            svMain.setOnQueryTextListener(object : OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (query == null)
+                val searchEditFrame: LinearLayout = this.findViewById(R.id.search_edit_frame)
+                (searchEditFrame.layoutParams as LinearLayout.LayoutParams).leftMargin = 0
+
+                setOnQueryTextFocusChangeListener { _, hasFocus ->
+                    val marginEnd = if (hasFocus) 18 else 10
+                    val params = layoutParams as MarginLayoutParams
+                    params.updateMarginsRelative(end = marginEnd.px)
+                    layoutParams = params
+                    mainToolbar.menu.setGroupVisible(R.id.main_menu_group, !hasFocus)
+                }
+                setOnQueryTextListener(object : OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        if (query == null)
+                            return false
+                        viewModel.getUsers(query)
+                        clearFocus()
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
                         return false
-                    viewModel.getUsers(query)
-                    svMain.clearFocus()
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return false
-                }
-            })
+                    }
+                })
+            }
         }
 
         started = true

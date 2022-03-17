@@ -7,21 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.data.UsersRecyclerInterface
 import io.github.null2264.githubuser.data.detail.DetailViewModel
 import io.github.null2264.githubuser.databinding.FragmentFollowingBinding
 
-class FollowingFragment : Fragment(), UsersRecyclerInterface {
-    private var _binding: FragmentFollowingBinding? = null
-    private val binding get() = _binding!!
+class FollowingFragment : Fragment(R.layout.fragment_following), UsersRecyclerInterface {
+    private val binding by viewBinding<FragmentFollowingBinding>(CreateMethod.INFLATE)
     private val sharedViewModel by activityViewModels<DetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentFollowingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -81,6 +81,5 @@ class FollowingFragment : Fragment(), UsersRecyclerInterface {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 }

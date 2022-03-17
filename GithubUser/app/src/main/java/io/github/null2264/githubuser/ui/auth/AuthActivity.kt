@@ -9,7 +9,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.lifecycleScope
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import io.github.null2264.githubuser.BuildConfig
+import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.databinding.ActivityAuthBinding
 import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.lib.api.OAuthConfig
@@ -20,13 +23,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAuthBinding
+class AuthActivity : AppCompatActivity(R.layout.activity_auth) {
     private lateinit var sharedPref: SharedPreferences
+    private val binding by viewBinding<ActivityAuthBinding>(CreateMethod.INFLATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val authorizeUrl: String? = when {

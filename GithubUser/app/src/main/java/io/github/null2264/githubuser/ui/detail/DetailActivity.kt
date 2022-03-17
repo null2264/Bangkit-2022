@@ -10,6 +10,8 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import io.github.null2264.githubuser.R
@@ -20,15 +22,14 @@ import io.github.null2264.githubuser.lib.Common
 import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.lib.User
 
-class DetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailBinding
+class DetailActivity : AppCompatActivity(R.layout.activity_detail) {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var viewModel: DetailViewModel
     lateinit var user: User
+    private val binding by viewBinding<ActivityDetailBinding>(CreateMethod.INFLATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.detailToolbar)

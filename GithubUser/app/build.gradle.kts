@@ -85,6 +85,9 @@ dependencies {
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    
+    // view binding QOL
+    implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
 
     // test unit
     testImplementation("junit:junit:4.13.2")
