@@ -78,8 +78,4 @@ class FollowingFragment : Fragment(R.layout.fragment_following), UsersRecyclerIn
             }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }
