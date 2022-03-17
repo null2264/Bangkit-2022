@@ -1,6 +1,7 @@
 package io.github.null2264.githubuser.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,9 @@ class FollowingFragment : Fragment(), UsersRecyclerInterface {
             }
             error.observe(this@FollowingFragment) {
                 binding.apply {
-                    if (it != null) {
+                    if (user.following <= 0) {
+                        Log.d("FollowingFragment", "No following found, skipping error...")
+                    } else if (it != null) {
                         tvFollowingError.apply {
                             visibility = View.VISIBLE
                             text = StringBuilder("ERROR: ").append(getString(it))
