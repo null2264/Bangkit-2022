@@ -48,7 +48,7 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.ListViewH
                     .append(" following")
             }
             itemView.setOnClickListener {
-                onItemClickCallback.onItemClicked(users[adapterPosition])
+                onItemClickCallback.onItemClicked(users[absoluteAdapterPosition])
             }
         }
     }
