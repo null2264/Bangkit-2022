@@ -6,35 +6,43 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 
-private var instance: ApolloClient? = null
-private var currentToken: String? = null
+class Apollo {
+    companion object {
+        @Volatile
+        var instance: ApolloClient? = null
 
-fun apolloClient(token: String): ApolloClient {
-    if (instance != null && token == currentToken) {
-        return instance!!
-    }
+        @Volatile
+        var currentToken: String? = null
 
-    currentToken = token
+        private class AuthorizationInterceptor(val token: String) : Interceptor {
+            override fun intercept(chain: Interceptor.Chain): Response {
+                val request = chain.request().newBuilder()
+                    .header("Authorization", "Bearer $token")
+                    .build()
 
-    val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(AuthorizationInterceptor(token))
-        .build()
+                return chain.proceed(request)
+            }
+        }
 
-    instance = ApolloClient.Builder()
-        .serverUrl("https://api.github.com/graphql")
-        .webSocketServerUrl("wss://api.github.com/graphql")
-        .okHttpClient(okHttpClient)
-        .build()
+        @JvmStatic
+        fun getInstance(token: String): ApolloClient {
+            if (instance != null && token == currentToken) {
+                return instance!!
+            }
 
-    return instance!!
-}
+            currentToken = token
 
-private class AuthorizationInterceptor(val token: String) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder()
-            .header("Authorization", "Bearer $token")
-            .build()
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(AuthorizationInterceptor(token))
+                .build()
 
-        return chain.proceed(request)
+            instance = ApolloClient.Builder()
+                .serverUrl("https://api.github.com/graphql")
+                .webSocketServerUrl("wss://api.github.com/graphql")
+                .okHttpClient(okHttpClient)
+                .build()
+
+            return instance!!
+        }
     }
 }

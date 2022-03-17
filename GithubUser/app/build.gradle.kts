@@ -22,19 +22,18 @@ android {
         versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Default value is set to \"\" because defaultValue's type is not handled for some reason
+        buildConfigField("String", "clientId", localProperties.getProperty("clientId", "\"\""))
+        buildConfigField("String", "clientSecret", localProperties.getProperty("clientSecret", "\"\""))
+
+        resValue("string", "redirect_scheme",
+            localProperties.getProperty("redirectScheme", "null2264.githubuser"))
+        buildConfigField("String", "redirectScheme",
+            localProperties.getProperty("redirectScheme", "\"null2264.githubuser\""))
     }
 
     buildTypes {
-        named("debug") {
-            // Default value is set to \"\" because defaultValue's type is not handled for some reason
-            buildConfigField("String", "clientId", localProperties.getProperty("clientId", "\"\""))
-            buildConfigField("String", "clientSecret", localProperties.getProperty("clientSecret", "\"\""))
-
-            resValue("string", "redirect_scheme",
-                localProperties.getProperty("redirectScheme", "null2264.githubuser"))
-            buildConfigField("String", "redirectScheme",
-                localProperties.getProperty("redirectScheme", "\"null2264.githubuser\""))
-        }
         named("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

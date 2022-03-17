@@ -13,11 +13,9 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.ListViewH
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     inner class DiffCallback : DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean
-            = oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean
-            = oldItem == newItem
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
     }
 
     private val differs = AsyncListDiffer(this, DiffCallback())

@@ -15,4 +15,6 @@
     <string name="greeting">Welcome to GitHub User\nTap the search icon to start searching.</string>
     <string name="login_via_oauth">Login via Oauth</string>
     <string name="fullscreen_avatar">Fullscreen Avatar</string>
+    <string name="settings">Settings</string>
+    <string name="favorites">Favorites</string>
 </resources>

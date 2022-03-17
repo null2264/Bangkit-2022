@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.apollographql.apollo3.exception.ApolloHttpException
 import com.google.gson.annotations.SerializedName
 import io.github.null2264.githubuser.BasicQuery
-import io.github.null2264.githubuser.lib.api.apolloClient
+import io.github.null2264.githubuser.lib.api.Apollo
 
 data class Token(
     @field:SerializedName("token_type")
@@ -19,7 +19,7 @@ data class Token(
 
     suspend fun validateToken(): Boolean {
         return try {
-            apolloClient(token).query(BasicQuery()).execute()
+            Apollo.getInstance(token).query(BasicQuery()).execute()
             true
         } catch (_: ApolloHttpException) {
             false

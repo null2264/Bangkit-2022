@@ -8,7 +8,7 @@ import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.UserDetailsQuery
 import io.github.null2264.githubuser.data.TokenViewModel
 import io.github.null2264.githubuser.lib.User
-import io.github.null2264.githubuser.lib.api.apolloClient
+import io.github.null2264.githubuser.lib.api.Apollo
 import kotlinx.coroutines.launch
 
 class DetailViewModel(token: String, private val user: User) : TokenViewModel(token) {
@@ -35,7 +35,7 @@ class DetailViewModel(token: String, private val user: User) : TokenViewModel(to
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val resp = apolloClient(getToken()).query(UserDetailsQuery(user.username)).execute().data?.user
+                val resp = Apollo.getInstance(getToken()).query(UserDetailsQuery(user.username)).execute().data?.user
                 if (resp != null) {
                     // If you have any idea on how to make this not duplicate, please let me this part driving me nuts
                     _following.value = resp.following.nodes?.filterNotNull()?.map { user ->

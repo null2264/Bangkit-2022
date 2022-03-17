@@ -5,6 +5,7 @@
         <!-- ActionBar -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="homeAsUpIndicator">@drawable/ic_arrow_left</item>
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/gray_800</item>
@@ -41,5 +42,15 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_github_mark</item>
         <item name="windowSplashScreenAnimationDuration">800</item>
         <item name="postSplashScreenTheme">@style/Theme.GithubUser</item>
+    </style>
+
+    <style name="Theme.GithubUser.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/bg_search_view</item>
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="strokeColor">@color/purple_200</item>
+        <item name="iconTint">?android:attr/textColor</item>
+        <item name="iconTintMode">src_atop</item>
+        <item name="android:searchIcon">@drawable/ic_search</item>
+        <item name="searchIcon">@drawable/ic_search</item>
     </style>
 </resources>
