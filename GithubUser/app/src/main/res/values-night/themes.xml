@@ -5,6 +5,7 @@
         <!-- ActionBar -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="homeAsUpIndicator">@drawable/ic_arrow_left</item>
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/gray_900</item>
