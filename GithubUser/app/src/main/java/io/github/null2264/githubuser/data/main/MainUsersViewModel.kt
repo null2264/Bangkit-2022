@@ -3,6 +3,7 @@ package io.github.null2264.githubuser.data.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.apollographql.apollo3.exception.ApolloHttpException
 import com.apollographql.apollo3.exception.ApolloNetworkException
 import io.github.null2264.githubuser.R
 import io.github.null2264.githubuser.UserSearchQuery
@@ -51,6 +52,8 @@ class MainUsersViewModel(token: String) : TokenViewModel(token) {
                 }
                 _error.value = null
             } catch (_: ApolloNetworkException) {
+                _error.value = R.string.no_connection
+            } catch (_: ApolloHttpException) {
                 _error.value = R.string.no_connection
             } finally {
                 _isLoading.value = false

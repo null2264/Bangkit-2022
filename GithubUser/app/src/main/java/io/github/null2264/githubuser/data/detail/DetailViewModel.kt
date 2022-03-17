@@ -67,6 +67,8 @@ class DetailViewModel(token: String, private val user: User) : TokenViewModel(to
                 }
             } catch (_: ApolloHttpException) {
                 _error.value = R.string.no_connection
+            } catch (_: ApolloHttpException) {
+                _error.value = R.string.no_connection
             } finally {
                 _isLoading.value = false
             }
