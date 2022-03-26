@@ -2,6 +2,8 @@ package io.github.null2264.githubuser.lib.api
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
+import io.github.null2264.githubuser.lib.Common
+import io.github.null2264.githubuser.lib.Token
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -12,12 +14,12 @@ class Apollo {
         var instance: ApolloClient? = null
 
         @Volatile
-        var currentToken: String? = null
+        var currentToken: Token? = null
 
-        private class AuthorizationInterceptor(val token: String) : Interceptor {
+        private class AuthorizationInterceptor(val token: Token) : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
                 val request = chain.request().newBuilder()
-                    .header("Authorization", "Bearer $token")
+                    .header("Authorization", token.toString())
                     .build()
 
                 return chain.proceed(request)
@@ -25,7 +27,7 @@ class Apollo {
         }
 
         @JvmStatic
-        fun getInstance(token: String): ApolloClient {
+        fun getInstance(token: Token): ApolloClient {
             if (instance != null && token == currentToken) {
                 return instance!!
             }
@@ -37,7 +39,7 @@ class Apollo {
                 .build()
 
             instance = ApolloClient.Builder()
-                .serverUrl("https://api.github.com/graphql")
+                .serverUrl(Common.GITHUB_API_BASE_URL + "graphql")
                 .webSocketServerUrl("wss://api.github.com/graphql")
                 .okHttpClient(okHttpClient)
                 .build()

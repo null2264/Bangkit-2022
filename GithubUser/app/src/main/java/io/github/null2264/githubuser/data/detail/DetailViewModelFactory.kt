@@ -1,11 +1,16 @@
 package io.github.null2264.githubuser.data.detail
 
 import androidx.lifecycle.ViewModel
-import io.github.null2264.githubuser.data.TokenViewModelFactory
-import io.github.null2264.githubuser.lib.User
+import io.github.null2264.githubuser.data.common.AppRepository
+import io.github.null2264.githubuser.data.common.GithubViewModelFactory
+import io.github.null2264.githubuser.data.database.entity.UserEntity
 
-class DetailViewModelFactory(val token: String, private val user: User) : TokenViewModelFactory(token) {
+class DetailViewModelFactory(
+    val appRepository: AppRepository,
+    private val user: UserEntity,
+) : GithubViewModelFactory(appRepository) {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(String::class.java, User::class.java).newInstance(token, user)
+        return modelClass.getConstructor(AppRepository::class.java, UserEntity::class.java)
+            .newInstance(appRepository, user)
     }
 }

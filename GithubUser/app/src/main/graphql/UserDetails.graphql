@@ -1,42 +1,19 @@
 query UserDetails ($login: String!){
     user (login: $login) {
-        following (first: 12) {
-            nodes {
-                id
-                login
-                name
-                avatarUrl
-                following (first: 1) {
-                    totalCount
-                }
-                followers (first: 1) {
-                    totalCount
-                }
-                repositories (first: 1) {
-                    totalCount
-                }
-                company
-                location
-            }
+        databaseId
+        login
+        name
+        avatarUrl
+        following (first: 1) {
+            totalCount
         }
-        followers (first: 12) {
-            nodes {
-                id
-                login
-                name
-                avatarUrl
-                following (first: 1) {
-                    totalCount
-                }
-                followers (first: 1) {
-                    totalCount
-                }
-                repositories (first: 1) {
-                    totalCount
-                }
-                company
-                location
-            }
+        followers (first: 1) {
+            totalCount
         }
+        repositories (first: 1) {
+            totalCount
+        }
+        company
+        location
     }
 }

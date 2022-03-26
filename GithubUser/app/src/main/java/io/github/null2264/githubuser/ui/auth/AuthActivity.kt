@@ -2,7 +2,6 @@ package io.github.null2264.githubuser.ui.auth
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +10,10 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.null2264.githubuser.BuildConfig
 import io.github.null2264.githubuser.R
+import io.github.null2264.githubuser.data.preference.SettingPreferences
 import io.github.null2264.githubuser.databinding.ActivityAuthBinding
 import io.github.null2264.githubuser.lib.Token
 import io.github.null2264.githubuser.lib.api.OAuthConfig
@@ -22,10 +23,14 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity(R.layout.activity_auth) {
-    private lateinit var sharedPref: SharedPreferences
-    private val binding by viewBinding<ActivityAuthBinding>(CreateMethod.INFLATE)
+    private val binding: ActivityAuthBinding by viewBinding(CreateMethod.INFLATE)
+
+    @Inject
+    lateinit var prefs: SettingPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +48,6 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth) {
             }
         }
 
-        sharedPref = getSharedPreferences("GITHUB_TOKEN", MODE_PRIVATE)
-
         binding.apply {
             btnAuthUse.setOnClickListener {
                 if (etAuthToken.text.isEmpty()) {
@@ -58,7 +61,7 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth) {
                         withContext(Dispatchers.Main) {
                             btnAuthUse.isEnabled = true
                             if (isValid) {
-                                token.toSharedPreference(sharedPref)
+                                prefs.setToken(token)
                                 finish()
                             } else {
                                 withContext(Dispatchers.Main) {
@@ -95,8 +98,10 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth) {
                 if (!response.isSuccessful || response.body() == null)
                     return
 
-                response.body()!!.toSharedPreference(sharedPref)
-                finish()
+                lifecycleScope.launch {
+                    prefs.setToken(response.body()!!)
+                    finish()
+                }
             }
 
             override fun onFailure(call: Call<Token>, t: Throwable) {

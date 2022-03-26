@@ -12,5 +12,16 @@
     <string name="no_users_prefix">Kami tidak dapat menemukan pengguna dengan nama</string>
     <string name="no_followers_suffix">belum mempunyai pengikuti.</string>
     <string name="no_following_suffix">tidak mengikuti siapa pun.</string>
-    <string name="greeting">Selamat Datang di GitHub User\nSilahkan tekan icon pencarian untuk mulai mencari.</string>
+    <string name="greeting">Selamat Datang di GitHub User\nSilahkan tekan bar pencarian untuk mulai mencari.</string>
+    <string name="login_via_oauth">Masuk menggunakan Oauth</string>
+    <string name="fullscreen_avatar">Avatar Layar Penuh</string>
+    <string name="settings">Pengaturan</string>
+    <string name="github_down">GitHub sedang bermasalah! Silahkan coba lagi nanti.</string>
+    <string name="explore">Jelajah</string>
+    <string name="favorites">Favorit</string>
+    <string name="greeting_favorites_prefix">Anda belum menambahkan siapa pun ke daftar favorit. Silahkan menuju ke</string>
+    <string name="greeting_favorites_suffix">jelajah untuk mencari pengguna untuk ditambahkan ke favorit</string>
+    <string name="display_category">Tampilan</string>
+    <string name="settings_night_mode">Aktifkan Mode Gelap</string>
+    <string name="favorite_desc">Tambahkan pengguna ke daftar favorit</string>
 </resources>

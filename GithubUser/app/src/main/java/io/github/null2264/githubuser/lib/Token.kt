@@ -12,6 +12,8 @@ data class Token(
     @field:SerializedName("access_token")
     var token: String,
 ) {
+    override fun toString(): String = "$type $token"
+
     fun toSharedPreference(sharedPref: SharedPreferences): Boolean {
         sharedPref.edit().putString("token", token).apply()
         return true
@@ -19,7 +21,7 @@ data class Token(
 
     suspend fun validateToken(): Boolean {
         return try {
-            Apollo.getInstance(token).query(BasicQuery()).execute()
+            Apollo.getInstance(this).query(BasicQuery()).execute()
             true
         } catch (_: ApolloHttpException) {
             false

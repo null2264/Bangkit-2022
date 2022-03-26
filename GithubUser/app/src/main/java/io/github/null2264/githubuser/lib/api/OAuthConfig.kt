@@ -1,6 +1,7 @@
 package io.github.null2264.githubuser.lib.api
 
 import io.github.null2264.githubuser.BuildConfig
+import io.github.null2264.githubuser.lib.Common
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,7 +21,7 @@ class OAuthConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://github.com/login/oauth/")
+                .baseUrl(Common.GITHUB_BASE_URL + "login/oauth/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

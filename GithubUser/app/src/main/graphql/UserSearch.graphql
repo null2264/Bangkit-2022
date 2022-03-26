@@ -1,8 +1,8 @@
 query UserSearch ($query: String!) {
-    search(type: USER, first: 12, query: $query) {
+    search(type: USER, first: 32, query: $query) {
         nodes {
             ... on User {
-                id
+                databaseId
                 login
                 name
                 avatarUrl

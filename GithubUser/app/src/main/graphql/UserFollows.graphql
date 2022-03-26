@@ -1,0 +1,45 @@
+query UserFollows ($login: String!){
+    user (login: $login) {
+        databaseId
+        following (first: 32) {
+            totalCount
+            nodes {
+                databaseId
+                login
+                name
+                avatarUrl
+                following (first: 1) {
+                    totalCount
+                }
+                followers (first: 1) {
+                    totalCount
+                }
+                repositories (first: 1) {
+                    totalCount
+                }
+                company
+                location
+            }
+        }
+        followers (first: 32) {
+            totalCount
+            nodes {
+                databaseId
+                login
+                name
+                avatarUrl
+                following (first: 1) {
+                    totalCount
+                }
+                followers (first: 1) {
+                    totalCount
+                }
+                repositories (first: 1) {
+                    totalCount
+                }
+                company
+                location
+            }
+        }
+    }
+}

@@ -12,9 +12,16 @@
     <string name="no_users_prefix">We couldn\'t find any users match</string>
     <string name="no_followers_suffix">doesn\'t have followers yet.</string>
     <string name="no_following_suffix">isn\'t following anybody.</string>
-    <string name="greeting">Welcome to GitHub User\nTap the search icon to start searching.</string>
+    <string name="greeting">Welcome to GitHub User\nTap the search bar to start searching.</string>
     <string name="login_via_oauth">Login via Oauth</string>
     <string name="fullscreen_avatar">Fullscreen Avatar</string>
     <string name="settings">Settings</string>
+    <string name="github_down">GitHub is currently went down! Please try again later.</string>
+    <string name="explore">Explore</string>
     <string name="favorites">Favorites</string>
+    <string name="greeting_favorites_prefix">You haven\'t favorited any user yet. Please go to</string>
+    <string name="greeting_favorites_suffix">explore to find a user to favorite</string>
+    <string name="display_category">Display</string>
+    <string name="settings_night_mode">Enable Dark Mode</string>
+    <string name="favorite_desc">Add user to favorite list</string>
 </resources>

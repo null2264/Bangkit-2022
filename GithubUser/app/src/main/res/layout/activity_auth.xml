@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/use_token"
             android:id="@+id/btn_auth_use"
+            android:background="@drawable/bg_button"
             tools:ignore="MissingConstraints"/>
 
     <Button
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login_via_oauth"
             android:id="@+id/btn_auth_oauth"
+            android:background="@drawable/bg_button"
             tools:ignore="MissingConstraints"/>
 
     <androidx.constraintlayout.helper.widget.Flow
