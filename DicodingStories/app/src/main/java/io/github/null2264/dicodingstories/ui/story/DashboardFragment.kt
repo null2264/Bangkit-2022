@@ -94,14 +94,17 @@ class DashboardFragment : Fragment() {
                         }
                         is Result.Success -> {
                             adapter.submitList(it.data)
-                            if (!swipeRefresh.isRefreshing)
-                                pbLoading.visibility = View.GONE
-                            else
-                                swipeRefresh.isRefreshing = false
                         }
-                        else -> {
-                            // TODO - Add error indicator
+                        is Result.Error -> {
+                            tvError.text = getString(it.stringId)
                         }
+                    }
+
+                    if (it !is Result.Loading) {
+                        if (!swipeRefresh.isRefreshing)
+                            pbLoading.visibility = View.GONE
+                        else
+                            swipeRefresh.isRefreshing = false
                     }
                 }
             }
