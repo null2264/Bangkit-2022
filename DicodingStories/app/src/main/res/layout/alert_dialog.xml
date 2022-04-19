@@ -1,0 +1,88 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:paddingTop="24dp"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="32dp">
+
+    <ImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:contentDescription="@string/alert_status_placeholder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/alert_title"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:src="@drawable/ic_warning_circle_fill"
+            tools:tint="@android:color/holo_red_light"
+            android:id="@+id/alert_status"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/alert_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/alert_content"
+            tools:text="@string/fail"
+            android:id="@+id/alert_title"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            app:layout_goneMarginBottom="32dp"
+            app:layout_constraintTop_toBottomOf="@id/alert_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttons_container"
+            tools:text="Text i don't know whatever"
+            android:id="@+id/alert_content"/>
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/alert_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/buttons_container">
+
+        <io.github.null2264.dicodingstories.widget.button.RoundedButton
+                android:layout_weight="50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@android:string/ok"
+                android:textSize="18sp"
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:layout_marginHorizontal="12dp"
+                android:id="@+id/alert_confirm"/>
+
+        <io.github.null2264.dicodingstories.widget.button.RoundedButton
+                android:layout_weight="50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@android:string/cancel"
+                android:textSize="18sp"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginHorizontal="12dp"
+                android:id="@+id/alert_cancel"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

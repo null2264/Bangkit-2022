@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NotEmptyEditText">
+        <attr name="errorMessage" format="string" localization="suggested"/>
+    </declare-styleable>
+    <declare-styleable name="LoadingButton">
+        <attr name="buttonText" format="string" localization="suggested"/>
+        <attr name="buttonColor" format="color"/>
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
+</resources>

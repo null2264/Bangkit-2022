@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dicoding Stories</string>
+    <string name="empty_email">Email tidak boleh kosong!</string>
+    <string name="invalid_password">Kata sandi harus berisi 6 atau lebih karakter!</string>
+    <string name="invalid_email">Harap masukan email yang valid!</string>
+    <string name="login">Masuk</string>
+    <string name="login_register_notice">Tidak punya akun?</string>
+    <string name="login_goto_register">Buat Akun</string>
+    <string name="password">Kata Sandi</string>
+    <string name="email">Email</string>
+    <string name="register">Daftar</string>
+    <string name="login_login_notice">Sudah punya akun?</string>
+    <string name="register_goto_login">Masuk</string>
+    <string name="name">Nama</string>
+    <string name="empty_name">Nama tidak boleh kosong!</string>
+    <string name="taken_email">Email sudah terpakai!</string>
+    <string name="success">Sukses!</string>
+    <string name="account_created">Akun berhasil dibuat!</string>
+    <string name="fail">Ups!</string>
+    <string name="alert_status_placeholder">Status Peringatan</string>
+    <string name="alert_status_success">Sukses</string>
+    <string name="alert_status_error">Error</string>
+    <string name="alert_status_warning">Peringatan</string>
+    <string name="wrong_password">Password salah</string>
+    <string name="user_not_found">User tidak ditemukan</string>
+    <string name="dicoding_logo_desc">Logo Dicoding</string>
+    <string name="stories_fail">Gagal memuat cerita</string>
+    <string name="language_placeholder">Pilih bahasa</string>
+    <string name="date_time_format">dd LLL yyyy, HH:mm</string>
+</resources>
