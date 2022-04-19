@@ -89,14 +89,22 @@ class DashboardFragment : Fragment() {
                 stories.observe(this@DashboardFragment) {
                     when (it) {
                         is Result.Loading -> {
-                            if (!swipeRefresh.isRefreshing)
+                            if (!swipeRefresh.isRefreshing) {
                                 pbLoading.visibility = View.VISIBLE
+                                rvStoriesContainer.visibility = View.GONE
+                            }
                         }
                         is Result.Success -> {
                             adapter.submitList(it.data)
+                            rvStoriesContainer.visibility = View.VISIBLE
+                            tvError.visibility = View.GONE
                         }
                         is Result.Error -> {
-                            tvError.text = getString(it.stringId)
+                            tvError.apply {
+                                text = getString(it.stringId)
+                                visibility = View.VISIBLE
+                            }
+                            rvStoriesContainer.visibility = View.GONE
                         }
                     }
 

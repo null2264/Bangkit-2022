@@ -9,18 +9,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StoryViewModel @Inject constructor(repo: Repository) : ViewModel() {
-    // TODO(for sub2) - make filter for location only
-    private var _storyFilter: MutableLiveData<String> = MutableLiveData("")
-    var storyFilter: String
-        get() = _storyFilter.value ?: ""
-        set(newValue) { _storyFilter.postValue(newValue) }
-    fun refreshStories() = _storyFilter.postValue(_storyFilter.value)
+    // TODO(for sub2) - Paging
 
-    val stories: LiveData<Result<List<Story>>>
+    private var queryState: MutableLiveData<String> = MutableLiveData("")
+    fun refreshStories() = queryState.postValue("")
 
-    init {
-        stories = Transformations.switchMap(_storyFilter) { query ->
-            repo.fetchStories().asLiveData()
-        }
+    val stories: LiveData<Result<List<Story>>> = Transformations.switchMap(queryState) {
+        repo.fetchStories().asLiveData()
     }
 }
