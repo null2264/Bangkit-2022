@@ -1,20 +1,43 @@
 package io.github.null2264.dicodingstories.data.preference
 
 import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.preference.PreferenceManager
 import androidx.preference.Preference
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import io.github.null2264.dicodingstories.lib.Common
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import io.github.null2264.dicodingstories.data.preference.PreferenceKeys as Keys
 
-@ExperimentalCoroutinesApi
-class PreferencesHelper(context: Context) {
-    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-    private val flowPrefs = FlowSharedPreferences(prefs)
+private val Context.dataStore by preferencesDataStore(name = "dicodingstories_data")
 
-    fun getToken() = prefs.getString(Keys.TOKEN, null)
-    fun setToken(newToken: String?) = prefs.edit().putString(Keys.TOKEN, newToken).commit()
+class PreferencesHelper(private val context: Context) {
+    private val dataStore = context.dataStore
 
-    fun nightMode() = flowPrefs.getBoolean(Keys.NIGHT_MODE, false /* TODO - Get device's current theme */)
-    fun lang() = flowPrefs.getString(Keys.LANG, "")
+    fun getToken() = dataStore.data.map { prefs ->
+        prefs[Keys.TOKEN] ?: ""
+    }
+
+    suspend fun setToken(newToken: String) = dataStore.edit { prefs ->
+        prefs[Keys.TOKEN] = newToken
+    }
+
+    fun getNightMode() = dataStore.data.map { prefs ->
+        prefs[Keys.NIGHT_MODE] ?: Common.isNightModeOn(context)
+    }
+
+    suspend fun setNightMode(newValue: Boolean) = dataStore.edit { prefs ->
+        prefs[Keys.NIGHT_MODE] = newValue
+    }
+
+    fun getLang() = dataStore.data.map { prefs ->
+        prefs[Keys.LANG] ?: ""
+    }
+
+    suspend fun setLang(newValue: String) = dataStore.edit { prefs ->
+        prefs[Keys.LANG] = newValue
+    }
 }

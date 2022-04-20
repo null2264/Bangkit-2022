@@ -1,13 +1,14 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
     id("kotlin-android")
+    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs")
 }
 
+@Suppress("UnstableApiUsage")
 android {
     compileSdk = 31
 
@@ -34,7 +35,7 @@ android {
     }
 
     compileOptions {
-        // JDK 11 is Android's new recommended LTS
+        // JDK 11 is Android's new recommended JDK
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -62,9 +63,13 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
 
-    implementation("androidx.camera:camera-camera2:1.1.0-beta01")
-    implementation("androidx.camera:camera-lifecycle:1.1.0-beta01")
-    implementation("androidx.camera:camera-view:1.1.0-beta01")
+    implementation("androidx.camera:camera-camera2:1.1.0-beta03")
+    implementation("androidx.camera:camera-lifecycle:1.1.0-beta03")
+    implementation("androidx.camera:camera-view:1.1.0-beta03")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
 
     // view binding QOL
     implementation("com.github.kirich1409:viewbindingpropertydelegate:1.5.6")
@@ -83,8 +88,6 @@ dependencies {
     // hilt+dagger
     implementation("com.google.dagger:hilt-android:2.41")
     kapt("com.google.dagger:hilt-compiler:2.41")
-
-    implementation("com.fredporciuncula:flow-preferences:1.6.0")
 
     implementation("com.github.bumptech.glide:glide:4.13.1")
     kapt("com.github.bumptech.glide:compiler:4.13.1")

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -22,22 +23,13 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class StoriesRecyclerAdapter(private val fragment: Fragment) : RecyclerView.Adapter<StoriesRecyclerAdapter.ListViewHolder>() {
-    inner class DiffCallback : DiffUtil.ItemCallback<Story>() {
-        override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean = oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: Story, newItem: Story): Boolean = oldItem == newItem
-    }
-
-    private val differs = AsyncListDiffer(this, DiffCallback())
-    fun submitList(list: List<Story>) = differs.submitList(list)
-
+class StoriesRecyclerAdapter(private val context: Context) : PagingDataAdapter<Story, StoriesRecyclerAdapter.ListViewHolder>(DIFF_CALLBACK) {
     class ListViewHolder(
-        private val fragment: Fragment,
+        private val context: Context,
         private val binding: ItemRowStoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(story: Story) {
-            val transitionImgName = fragment.requireContext().getString(R.string.transition_image_name, story.id)
+            val transitionImgName = context.getString(R.string.transition_image_name, story.id)
             binding.apply {
                 ivStory.transitionName = transitionImgName
                 Glide.with(itemView.context)
@@ -47,7 +39,7 @@ class StoriesRecyclerAdapter(private val fragment: Fragment) : RecyclerView.Adap
                 tvDescription.text = story.description
                 val dateTime = ZonedDateTime.parse(story.createdAt, DateTimeFormatter.ISO_DATE_TIME)
                     .withZoneSameInstant(ZoneId.of(TimeZone.getDefault().id))
-                    .format(DateTimeFormatter.ofPattern(fragment.requireContext().getString(R.string.date_time_format)))
+                    .format(DateTimeFormatter.ofPattern(context.getString(R.string.date_time_format)))
                 tvDate.text = dateTime
             }
 
@@ -62,16 +54,22 @@ class StoriesRecyclerAdapter(private val fragment: Fragment) : RecyclerView.Adap
         }
     }
 
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        holder.bind(getItem(position) as Story)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(
-            fragment,
+            context,
             ItemRowStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(differs.currentList[position])
-    }
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Story>() {
+            override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean = oldItem.id == newItem.id
 
-    override fun getItemCount(): Int = differs.currentList.size
+            override fun areContentsTheSame(oldItem: Story, newItem: Story): Boolean = oldItem == newItem
+        }
+    }
 }

@@ -2,6 +2,7 @@ package io.github.null2264.dicodingstories.lib
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.Resources.NotFoundException
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -154,4 +155,12 @@ object Common {
     }
 
     fun parseError(string: String): CommonResponse = Gson().fromJson(string, CommonResponse::class.java)
+
+    fun isNightModeOn(context: Context): Boolean {
+        return when (context.resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> true
+            Configuration.UI_MODE_NIGHT_NO -> false
+            else -> true
+        }
+    }
 }

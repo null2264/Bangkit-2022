@@ -1,10 +1,14 @@
 package io.github.null2264.dicodingstories.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.google.gson.JsonObject
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.data.api.ApiService
 import io.github.null2264.dicodingstories.data.model.CommonResponse
 import io.github.null2264.dicodingstories.data.model.Story
+import io.github.null2264.dicodingstories.data.story.StoryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.json.JSONObject
@@ -22,5 +26,17 @@ class Repository(private val apiService: ApiService) {
         } else {
             emit(Result.Error(R.string.stories_fail))
         }
+    }
+
+    fun fetchPagedStories(): Flow<PagingData<Story>> = Pager(
+        config = PagingConfig(
+            pageSize = PAGE_SIZE,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { StoryPagingSource(apiService) }
+    ).flow
+
+    companion object {
+        const val PAGE_SIZE = 15
     }
 }

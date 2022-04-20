@@ -22,7 +22,7 @@ interface ApiService {
     @GET("stories")
     suspend fun getStories(
         @Query("page") page: Int,
-        @Query("size") size: Int,
+        @Query("size") size: Int = 15
     ): Response<Stories>
 
     @Multipart

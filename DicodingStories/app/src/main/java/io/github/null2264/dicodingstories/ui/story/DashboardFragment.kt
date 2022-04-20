@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,19 +18,24 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.null2264.dicodingstories.R
+import io.github.null2264.dicodingstories.data.other.LoadingStateAdapter
 import io.github.null2264.dicodingstories.data.preference.PreferencesHelper
 import io.github.null2264.dicodingstories.data.story.StoriesRecyclerAdapter
 import io.github.null2264.dicodingstories.data.story.StoryViewModel
 import io.github.null2264.dicodingstories.databinding.FragmentDashboardBinding
 import io.github.null2264.dicodingstories.lib.Result
 import io.github.null2264.dicodingstories.widget.dialog.ZiAlertDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
     private val binding: FragmentDashboardBinding by viewBinding(CreateMethod.INFLATE)
     private val viewModel: StoryViewModel by viewModels()
-    private val adapter by lazy { StoriesRecyclerAdapter(this@DashboardFragment) }
+    private val adapter by lazy { StoriesRecyclerAdapter(requireContext()) }
 
     @Inject
     lateinit var prefs: PreferencesHelper
@@ -44,7 +50,11 @@ class DashboardFragment : Fragment() {
             rvStoriesContainer.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = this@DashboardFragment.adapter
+                adapter = this@DashboardFragment.adapter.withLoadStateFooter(
+                    footer = LoadingStateAdapter {
+                        this@DashboardFragment.adapter.retry()
+                    }
+                )
             }
             setHasOptionsMenu(true)
             (requireActivity() as AppCompatActivity).setSupportActionBar(appbar)
@@ -62,10 +72,10 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val token = prefs.getToken()
+        val token = runBlocking(Dispatchers.IO) { prefs.getToken().first() }
         val navController = findNavController()
 
-        if (token == null) {
+        if (token == "") {
             goToLogin()
         }
 
@@ -87,33 +97,8 @@ class DashboardFragment : Fragment() {
 
             viewModel.apply {
                 stories.observe(this@DashboardFragment) {
-                    when (it) {
-                        is Result.Loading -> {
-                            if (!swipeRefresh.isRefreshing) {
-                                pbLoading.visibility = View.VISIBLE
-                                rvStoriesContainer.visibility = View.GONE
-                            }
-                        }
-                        is Result.Success -> {
-                            adapter.submitList(it.data)
-                            rvStoriesContainer.visibility = View.VISIBLE
-                            tvError.visibility = View.GONE
-                        }
-                        is Result.Error -> {
-                            tvError.apply {
-                                text = getString(it.stringId)
-                                visibility = View.VISIBLE
-                            }
-                            rvStoriesContainer.visibility = View.GONE
-                        }
-                    }
-
-                    if (it !is Result.Loading) {
-                        if (!swipeRefresh.isRefreshing)
-                            pbLoading.visibility = View.GONE
-                        else
-                            swipeRefresh.isRefreshing = false
-                    }
+                    // TODO - Known bug: Loading/Error won't show up
+                    adapter.submitData(lifecycle, it)
                 }
             }
         }
@@ -132,7 +117,7 @@ class DashboardFragment : Fragment() {
                     content = "Are you sure?"
                     isCancelEnabled = true
                     setOnConfirmListener {
-                        prefs.setToken(null)
+                        runBlocking(Dispatchers.IO) { prefs.setToken("") }
                         goToLogin()
                     }
                 }.show()
