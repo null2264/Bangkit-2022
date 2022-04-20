@@ -48,13 +48,16 @@ class DashboardFragment : Fragment() {
 
                 if (it.refresh is LoadState.Error)
                     tvError.text = (it.refresh as LoadState.Error).error.localizedMessage ?: "Me when error"
-                tvError.isVisible = it.refresh is LoadState.Error
+                errorContainer.isVisible = it.refresh is LoadState.Error
 
                 if (!swipeRefresh.isRefreshing)
                     pbLoading.isVisible = it.refresh is LoadState.Loading
                 else
                     swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
             }
+
+            btnRetry.setOnClickListener { viewModel.refreshStories() }
+
             rvStoriesContainer.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)

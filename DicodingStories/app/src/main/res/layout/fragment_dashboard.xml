@@ -47,20 +47,36 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/pb_loading"/>
 
-    <TextView
-            android:layout_width="0dp"
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_marginHorizontal="24dp"
             android:visibility="gone"
-            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             tools:visibility="visible"
-            android:id="@+id/tv_error"/>
+            android:id="@+id/error_container">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:id="@+id/tv_error"/>
+
+        <io.github.null2264.dicodingstories.widget.button.RoundedButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/retry"
+                android:layout_marginTop="24dp"
+                android:id="@+id/btn_retry"/>
+
+    </LinearLayout>
 
     <!-- TODO(for sub2) - set to visible if filter is map only -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
