@@ -1,17 +1,12 @@
 package io.github.null2264.dicodingstories.data.story
 
 import android.content.Context
-import android.icu.text.SimpleDateFormat
 import android.icu.util.TimeZone
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.NavHostFragment
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -43,15 +38,15 @@ class StoriesRecyclerAdapter(private val context: Context) : PagingDataAdapter<S
                 tvDate.text = dateTime
             }
 
-            var clicked = false // prevent crash when user double tap an item
+            var alreadyClicked = false // prevent crash when user double tap an item
 
             itemView.setOnClickListener {
-                if (!clicked) {
+                if (!alreadyClicked) {
                     val extras = FragmentNavigatorExtras(
                         binding.ivStory to transitionImgName
                     )
                     val action = DashboardFragmentDirections.actionShowDetail(story)
-                    clicked = true
+                    alreadyClicked = true
                     it.findNavController().navigate(action, extras)
                 }
             }

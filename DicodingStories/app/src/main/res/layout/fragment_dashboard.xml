@@ -23,11 +23,14 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp"
             android:id="@+id/swipe_refresh">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="8dp"
+                android:clipToPadding="false"
                 android:id="@+id/rv_stories_container"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -45,29 +48,19 @@
             android:id="@+id/pb_loading"/>
 
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:visibility="gone"
+            android:layout_marginHorizontal="16dp"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            tools:visibility="visible"
             android:id="@+id/tv_error"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/new_story"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_plus"
-            app:tint="@color/white"
-            app:backgroundTint="@color/green_600"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:maxImageSize="32dp"
-            android:id="@+id/btn_new_story"/>
 
     <!-- TODO(for sub2) - set to visible if filter is map only -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -86,4 +79,18 @@
             app:maxImageSize="18dp"
             tools:visibility="visible"
             android:id="@+id/btn_map"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/new_story"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_plus"
+            app:tint="@color/white"
+            app:backgroundTint="@color/green_600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:maxImageSize="32dp"
+            android:id="@+id/btn_new_story"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

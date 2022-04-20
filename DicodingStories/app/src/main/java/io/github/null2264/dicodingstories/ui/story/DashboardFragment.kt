@@ -45,6 +45,11 @@ class DashboardFragment : Fragment() {
         binding.apply {
             storiesAdapter.addLoadStateListener {
                 rvStoriesContainer.isVisible = it.refresh !is LoadState.Loading || it.refresh !is LoadState.Error
+
+                if (it.refresh is LoadState.Error)
+                    tvError.text = (it.refresh as LoadState.Error).error.localizedMessage ?: "Me when error"
+                tvError.isVisible = it.refresh is LoadState.Error
+
                 if (!swipeRefresh.isRefreshing)
                     pbLoading.isVisible = it.refresh is LoadState.Loading
                 else
