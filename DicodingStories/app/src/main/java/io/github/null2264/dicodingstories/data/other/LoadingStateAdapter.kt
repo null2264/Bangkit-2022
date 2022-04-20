@@ -21,7 +21,10 @@ class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Load
             }
 
             binding.apply {
-                loading.isGone = loadState is LoadState.Loading
+                loading.apply {
+                    isVisible = loadState is LoadState.Loading
+                    isGone = loadState is LoadState.Error
+                }
                 tvRetry.isVisible = loadState is LoadState.Error
                 tvErrorMsg.isVisible = loadState is LoadState.Error
             }
