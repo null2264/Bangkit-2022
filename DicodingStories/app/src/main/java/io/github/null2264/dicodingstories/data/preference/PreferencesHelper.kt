@@ -3,13 +3,8 @@ package io.github.null2264.dicodingstories.data.preference
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.preference.PreferenceManager
-import androidx.preference.Preference
 import io.github.null2264.dicodingstories.lib.Common
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 import io.github.null2264.dicodingstories.data.preference.PreferenceKeys as Keys
 
 private val Context.dataStore by preferencesDataStore(name = "dicodingstories_data")

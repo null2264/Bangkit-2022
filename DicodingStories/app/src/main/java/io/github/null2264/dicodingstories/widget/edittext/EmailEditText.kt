@@ -5,10 +5,13 @@ import android.graphics.Canvas
 import android.text.InputType
 import android.util.AttributeSet
 import io.github.null2264.dicodingstories.R
-import io.github.null2264.dicodingstories.lib.Result
 import io.github.null2264.dicodingstories.widget.base.ValidatedEditText
 
-class EmailEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int? = null) : ValidatedEditText(context, attrs, defStyleAttr) {
+class EmailEditText @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int? = null,
+) : ValidatedEditText(context, attrs, defStyleAttr) {
     init {
         editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
     }

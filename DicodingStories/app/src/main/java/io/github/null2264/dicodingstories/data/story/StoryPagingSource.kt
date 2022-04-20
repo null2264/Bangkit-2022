@@ -4,12 +4,10 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import io.github.null2264.dicodingstories.data.api.ApiService
 import io.github.null2264.dicodingstories.data.model.Story
-import retrofit2.HttpException
-import java.io.IOException
 
 class StoryPagingSource(
     private val service: ApiService,
-    private val filter: StoryFilter?
+    private val filter: StoryFilter?,
 ) : PagingSource<Int, Story>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Story> {
         val pos = params.key ?: INITIAL_PAGE_INDEX

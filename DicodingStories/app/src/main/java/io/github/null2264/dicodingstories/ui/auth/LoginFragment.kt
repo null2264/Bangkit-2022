@@ -2,20 +2,18 @@ package io.github.null2264.dicodingstories.ui.auth
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.data.api.AuthService
-import io.github.null2264.dicodingstories.data.model.CommonResponse
 import io.github.null2264.dicodingstories.data.preference.PreferencesHelper
 import io.github.null2264.dicodingstories.databinding.FragmentLoginBinding
 import io.github.null2264.dicodingstories.lib.Common
@@ -34,6 +32,7 @@ class LoginFragment : Fragment() {
 
     @Inject
     lateinit var auth: AuthService
+
     @Inject
     lateinit var prefs: PreferencesHelper
 

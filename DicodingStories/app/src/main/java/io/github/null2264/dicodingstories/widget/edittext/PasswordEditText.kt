@@ -1,22 +1,19 @@
 package io.github.null2264.dicodingstories.widget.edittext
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.text.InputType
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
-import android.view.View
 import androidx.core.content.ContextCompat
-import com.google.android.material.textfield.TextInputLayout
 import io.github.null2264.dicodingstories.R
-import io.github.null2264.dicodingstories.lib.Common
 import io.github.null2264.dicodingstories.widget.base.ValidatedEditText
-import io.github.null2264.dicodingstories.lib.Result
 
-class PasswordEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int? = null) : ValidatedEditText(context, attrs, defStyleAttr) {
+class PasswordEditText @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int? = null,
+) : ValidatedEditText(context, attrs, defStyleAttr) {
     private val minLength = 6
 
     init {

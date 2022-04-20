@@ -18,10 +18,11 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class StoriesRecyclerAdapter(private val context: Context) : PagingDataAdapter<Story, StoriesRecyclerAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class StoriesRecyclerAdapter(private val context: Context) :
+    PagingDataAdapter<Story, StoriesRecyclerAdapter.ListViewHolder>(DIFF_CALLBACK) {
     class ListViewHolder(
         private val context: Context,
-        private val binding: ItemRowStoryBinding
+        private val binding: ItemRowStoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(story: Story) {
             val transitionImgName = context.getString(R.string.transition_image_name, story.id)

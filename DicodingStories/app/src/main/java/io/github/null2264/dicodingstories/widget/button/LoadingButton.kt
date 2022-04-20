@@ -8,19 +8,20 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.annotation.ColorInt
-import androidx.databinding.BindingAdapter
 import io.github.null2264.dicodingstories.R
 
 class LoadingButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private var button: RoundedButton
     private var progressBar: ProgressBar
     var text: String? = null
+
     @ColorInt
     var buttonColor: Int = 0
+
     @ColorInt
     var textColor: Int = 0
 

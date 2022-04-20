@@ -100,11 +100,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesApiService(@LoggedInRetrofitClient retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun providesApiService(@LoggedInRetrofitClient retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 
     @Singleton
     @Provides
-    fun providesAuthApiService(@AuthRetrofitClient retrofit: Retrofit): AuthService = retrofit.create(AuthService::class.java)
+    fun providesAuthApiService(@AuthRetrofitClient retrofit: Retrofit): AuthService =
+        retrofit.create(AuthService::class.java)
 
     @Singleton
     @Provides

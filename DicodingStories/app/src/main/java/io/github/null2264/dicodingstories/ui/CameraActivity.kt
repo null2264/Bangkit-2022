@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -14,13 +13,8 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
-import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.databinding.ActivityCameraBinding
 import io.github.null2264.dicodingstories.lib.Common.createFile
 import io.github.null2264.dicodingstories.ui.story.NewStoryFragment
@@ -97,10 +91,6 @@ class CameraActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         startCamera()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     private fun takePhoto() {

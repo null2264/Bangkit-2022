@@ -4,8 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
-import com.google.android.material.textfield.TextInputLayout
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.lib.Extension.px
 

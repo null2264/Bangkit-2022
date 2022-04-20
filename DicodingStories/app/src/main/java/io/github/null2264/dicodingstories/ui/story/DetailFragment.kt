@@ -3,22 +3,22 @@ package io.github.null2264.dicodingstories.ui.story
 import android.graphics.drawable.Drawable
 import android.icu.util.TimeZone
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.*
-import androidx.transition.Fade.OUT
+import androidx.transition.Explode
+import androidx.transition.Slide
+import androidx.transition.TransitionInflater
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.databinding.FragmentDetailBinding
@@ -34,7 +34,8 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.change_bounds)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.change_bounds)
         enterTransition = Explode()
         returnTransition = Slide()
         postponeEnterTransition()
@@ -63,7 +64,7 @@ class DetailFragment : Fragment() {
                 e: GlideException?,
                 model: Any?,
                 target: Target<Drawable>?,
-                isFirstResource: Boolean
+                isFirstResource: Boolean,
             ): Boolean {
                 startPostponedEnterTransition()
                 return false
@@ -74,7 +75,7 @@ class DetailFragment : Fragment() {
                 model: Any?,
                 target: Target<Drawable>?,
                 dataSource: DataSource?,
-                isFirstResource: Boolean
+                isFirstResource: Boolean,
             ): Boolean {
                 startPostponedEnterTransition()
                 return false

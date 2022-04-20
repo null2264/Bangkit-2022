@@ -2,9 +2,9 @@ package io.github.null2264.dicodingstories.ui.story
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -138,7 +138,9 @@ class DashboardFragment : Fragment() {
                 }.show()
                 true
             }
-            else -> {super.onOptionsItemSelected(item)}
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 }

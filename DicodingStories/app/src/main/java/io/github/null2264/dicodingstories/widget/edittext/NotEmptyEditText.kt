@@ -6,8 +6,13 @@ import androidx.annotation.StringRes
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.widget.base.ValidatedEditText
 
-class NotEmptyEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int? = null) : ValidatedEditText(context, attrs, defStyleAttr) {
+class NotEmptyEditText @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int? = null,
+) : ValidatedEditText(context, attrs, defStyleAttr) {
     private var errorMessage: String? = null
+
     @StringRes
     private var errorMessageId: Int = 0
 

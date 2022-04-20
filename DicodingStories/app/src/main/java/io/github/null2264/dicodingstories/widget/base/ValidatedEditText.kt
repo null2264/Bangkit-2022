@@ -9,7 +9,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.lib.Extension.px
-import io.github.null2264.dicodingstories.lib.Result
 
 abstract class ValidatedEditText @JvmOverloads constructor(
     context: Context,

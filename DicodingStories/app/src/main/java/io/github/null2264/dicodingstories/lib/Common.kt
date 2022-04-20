@@ -56,7 +56,13 @@ object Common {
         return null
     }
 
-    fun quickDialog(context: Context, type: Int, title: String, message: String, callback: ZiAlertDialog.ZiOnClickListener? = null) {
+    fun quickDialog(
+        context: Context,
+        type: Int,
+        title: String,
+        message: String,
+        callback: ZiAlertDialog.ZiOnClickListener? = null,
+    ) {
         ZiAlertDialog(context).apply {
             this.type = type
             this.title = title
