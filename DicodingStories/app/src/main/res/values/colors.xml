@@ -13,6 +13,7 @@
     <color name="black">#FF0E1418</color>
     <color name="white">#F2F7FA</color>
     <color name="green_200">#7BFF5D</color>
+    <color name="green_600">#45CA26</color>
 
     <!-- Dicoding specific color -->
     <color name="gray_200">#5F7B99</color>

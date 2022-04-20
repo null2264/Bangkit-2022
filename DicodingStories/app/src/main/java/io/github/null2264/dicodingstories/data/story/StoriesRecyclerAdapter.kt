@@ -43,13 +43,17 @@ class StoriesRecyclerAdapter(private val context: Context) : PagingDataAdapter<S
                 tvDate.text = dateTime
             }
 
-            itemView.setOnClickListener {
-                val extras = FragmentNavigatorExtras(
-                    binding.ivStory to transitionImgName
-                )
+            var clicked = false // prevent crash when user double tap an item
 
-                val action = DashboardFragmentDirections.actionShowDetail(story)
-                it.findNavController().navigate(action, extras)
+            itemView.setOnClickListener {
+                if (!clicked) {
+                    val extras = FragmentNavigatorExtras(
+                        binding.ivStory to transitionImgName
+                    )
+                    val action = DashboardFragmentDirections.actionShowDetail(story)
+                    clicked = true
+                    it.findNavController().navigate(action, extras)
+                }
             }
         }
     }

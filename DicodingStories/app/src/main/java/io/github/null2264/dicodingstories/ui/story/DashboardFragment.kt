@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Explode
 import androidx.transition.Fade
 import androidx.transition.Fade.OUT
-import androidx.transition.TransitionInflater
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.data.other.LoadingStateAdapter
@@ -23,11 +21,9 @@ import io.github.null2264.dicodingstories.data.preference.PreferencesHelper
 import io.github.null2264.dicodingstories.data.story.StoriesRecyclerAdapter
 import io.github.null2264.dicodingstories.data.story.StoryViewModel
 import io.github.null2264.dicodingstories.databinding.FragmentDashboardBinding
-import io.github.null2264.dicodingstories.lib.Result
 import io.github.null2264.dicodingstories.widget.dialog.ZiAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -35,7 +31,7 @@ import javax.inject.Inject
 class DashboardFragment : Fragment() {
     private val binding: FragmentDashboardBinding by viewBinding(CreateMethod.INFLATE)
     private val viewModel: StoryViewModel by viewModels()
-    private val adapter by lazy { StoriesRecyclerAdapter(requireContext()) }
+    private val storiesAdapter by lazy { StoriesRecyclerAdapter(requireContext()) }
 
     @Inject
     lateinit var prefs: PreferencesHelper
@@ -47,12 +43,19 @@ class DashboardFragment : Fragment() {
         sharedElementReturnTransition = Fade(OUT)
         returnTransition = Fade(OUT)
         binding.apply {
+            storiesAdapter.addLoadStateListener {
+                rvStoriesContainer.isVisible = it.refresh !is LoadState.Loading || it.refresh !is LoadState.Error
+                if (!swipeRefresh.isRefreshing)
+                    pbLoading.isVisible = it.refresh is LoadState.Loading
+                else
+                    swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+            }
             rvStoriesContainer.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = this@DashboardFragment.adapter.withLoadStateFooter(
+                adapter = storiesAdapter.withLoadStateFooter(
                     footer = LoadingStateAdapter {
-                        this@DashboardFragment.adapter.retry()
+                        storiesAdapter.retry()
                     }
                 )
             }
@@ -96,9 +99,13 @@ class DashboardFragment : Fragment() {
             swipeRefresh.setOnRefreshListener { viewModel.refreshStories() }
 
             viewModel.apply {
+                getState().observe(this@DashboardFragment) {
+                    binding.btnMap.isVisible = it.locationOnly
+                }
+
                 stories.observe(this@DashboardFragment) {
                     // TODO - Known bug: Loading/Error won't show up
-                    adapter.submitData(lifecycle, it)
+                    storiesAdapter.submitData(lifecycle, it)
                 }
             }
         }
@@ -114,7 +121,7 @@ class DashboardFragment : Fragment() {
                 ZiAlertDialog(requireContext()).apply {
                     type = ZiAlertDialog.WARNING
                     title = getString(R.string.logout)
-                    content = "Are you sure?"
+                    content = getString(R.string.logout_prompt)
                     isCancelEnabled = true
                     setOnConfirmListener {
                         runBlocking(Dispatchers.IO) { prefs.setToken("") }
@@ -122,7 +129,7 @@ class DashboardFragment : Fragment() {
                     }
                 }.show()
                 true
-            } // logout
+            }
             else -> {super.onOptionsItemSelected(item)}
         }
     }

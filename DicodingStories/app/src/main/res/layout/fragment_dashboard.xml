@@ -62,8 +62,28 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_plus"
+            app:tint="@color/white"
+            app:backgroundTint="@color/green_600"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:backgroundTint="@color/green_200"
+            app:maxImageSize="32dp"
             android:id="@+id/btn_new_story"/>
+
+    <!-- TODO(for sub2) - set to visible if filter is map only -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/new_story"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_map"
+            android:visibility="gone"
+            app:tint="@color/white"
+            app:backgroundTint="@color/gray_200"
+            app:layout_constraintStart_toStartOf="@id/btn_new_story"
+            app:layout_constraintEnd_toEndOf="@id/btn_new_story"
+            app:layout_constraintBottom_toTopOf="@id/btn_new_story"
+            app:fabSize="mini"
+            app:maxImageSize="18dp"
+            tools:visibility="visible"
+            android:id="@+id/btn_map"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

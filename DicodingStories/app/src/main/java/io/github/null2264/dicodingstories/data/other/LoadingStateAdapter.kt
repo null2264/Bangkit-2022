@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.null2264.dicodingstories.databinding.ItemLoadingBinding
 
 class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<LoadingStateAdapter.LoadingStateViewHolder>() {
-    class LoadingStateViewHolder(private  val binding: ItemLoadingBinding, retry: () -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class LoadingStateViewHolder(
+        private val binding: ItemLoadingBinding,
+        retry: () -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.loadingContainer.setOnClickListener { retry.invoke() }
         }
@@ -21,10 +24,7 @@ class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Load
             }
 
             binding.apply {
-                loading.apply {
-                    isVisible = loadState is LoadState.Loading
-                    isGone = loadState is LoadState.Error
-                }
+                loading.isVisible = loadState is LoadState.Loading
                 tvRetry.isVisible = loadState is LoadState.Error
                 tvErrorMsg.isVisible = loadState is LoadState.Error
             }

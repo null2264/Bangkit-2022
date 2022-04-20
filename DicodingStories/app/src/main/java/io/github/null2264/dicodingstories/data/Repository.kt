@@ -8,6 +8,7 @@ import io.github.null2264.dicodingstories.R
 import io.github.null2264.dicodingstories.data.api.ApiService
 import io.github.null2264.dicodingstories.data.model.CommonResponse
 import io.github.null2264.dicodingstories.data.model.Story
+import io.github.null2264.dicodingstories.data.story.StoryFilter
 import io.github.null2264.dicodingstories.data.story.StoryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -28,12 +29,12 @@ class Repository(private val apiService: ApiService) {
         }
     }
 
-    fun fetchPagedStories(): Flow<PagingData<Story>> = Pager(
+    fun fetchPagedStories(filter: StoryFilter? = null): Flow<PagingData<Story>> = Pager(
         config = PagingConfig(
             pageSize = PAGE_SIZE,
             enablePlaceholders = false
         ),
-        pagingSourceFactory = { StoryPagingSource(apiService) }
+        pagingSourceFactory = { StoryPagingSource(apiService, filter) }
     ).flow
 
     companion object {
