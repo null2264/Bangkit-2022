@@ -40,6 +40,10 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             btnLogin.setOnButtonClickListener {
                 doLogin()
@@ -62,8 +66,6 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.registerFragment)
             }
         }
-
-        return binding.root
     }
 
     private fun doLogin() {

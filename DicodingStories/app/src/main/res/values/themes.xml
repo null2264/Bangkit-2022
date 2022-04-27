@@ -4,6 +4,8 @@
     <color name="cardViewBackground">#E5EDF2</color>
 
     <style name="Theme.DicodingStories.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_dicoding_logo_downscaled</item>
         <item name="windowSplashScreenAnimationDuration">800</item>
 
@@ -33,11 +35,6 @@
 
         <item name="backgroundColor">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>
-    </style>
-
-    <style name="Theme.DicodingStories.Starting.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.DicodingStories.Starting.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@id/btn_new_story"
+                app:layout_constraintEnd_toEndOf="@id/btn_new_story"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_new_story"
+                android:id="@+id/btn_map"/>
+        <Constraint android:id="@id/error_container">
+            <PropertySet
+                app:applyMotionScene="false"
+                app:visibilityMode="ignore"/>
+        </Constraint>
+        <Constraint android:id="@id/loading">
+            <PropertySet
+                    app:applyMotionScene="false"
+                    app:visibilityMode="ignore"/>
+        </Constraint>
+        <Constraint android:id="@id/tv_error">
+            <PropertySet
+                    app:applyMotionScene="false"
+                    app:visibilityMode="ignore"/>
+        </Constraint>
+        <Constraint android:id="@id/btn_retry">
+            <PropertySet
+                    app:applyMotionScene="false"
+                    app:visibilityMode="ignore"/>
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end" app:deriveConstraintsFrom="@id/start">
+        <Constraint
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@id/btn_new_story"
+                app:layout_constraintBottom_toTopOf="@+id/btn_new_story"
+                app:layout_constraintEnd_toEndOf="@id/btn_new_story"
+                android:id="@+id/btn_map"/>
+    </ConstraintSet>
+
+    <Transition
+            app:motionInterpolator="easeInOut"
+            app:constraintSetStart="@id/start"
+            app:constraintSetEnd="@id/end">
+        <OnClick app:targetId="@id/hidden_view" app:clickAction="transitionToEnd"/>
+    </Transition>
+</MotionScene>

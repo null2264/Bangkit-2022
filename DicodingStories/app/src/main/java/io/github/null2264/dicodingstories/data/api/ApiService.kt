@@ -22,5 +22,7 @@ interface ApiService {
     suspend fun newStory(
         @Part file: MultipartBody.Part,
         @Part("description") desc: String,
+        @Part("lat") lat: Double? = null,
+        @Part("lon") lon: Double? = null,
     ): Response<CommonResponse>
 }

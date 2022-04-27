@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.motion.widget.MotionLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/backgroundColor"
-        tools:context=".ui.story.DashboardFragment">
+        tools:context=".ui.story.DashboardFragment"
+        app:layoutDescription="@xml/fragment_dashboard_scene">
 
-    <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
+    <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/gray_1000"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/white"
-            app:subtitleTextColor="@color/gray_200"
-            tools:title="test"
+            android:visibility="gone"
+            android:id="@+id/hidden_view"/>
+
+    <include
+            layout="@layout/toolbar_actionbar"
             android:id="@+id/appbar"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,7 +24,6 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="0dp"
             android:id="@+id/swipe_refresh">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -38,62 +38,57 @@
     <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:indeterminateTint="?android:attr/textColorPrimary"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/pb_loading"/>
+            android:id="@+id/loading"/>
 
-    <LinearLayout
-            android:layout_width="match_parent"
+    <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:visibility="gone"
-            android:orientation="vertical"
+            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_retry"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:id="@+id/tv_error"/>
+
+    <io.github.null2264.dicodingstories.widget.button.RoundedButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_error"
+            app:layout_constraintStart_toStartOf="@id/tv_error"
+            app:layout_constraintEnd_toEndOf="@id/tv_error"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btn_retry"/>
+
+    <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="tv_error,btn_retry"
             tools:visibility="visible"
-            android:id="@+id/error_container">
+            android:id="@+id/error_container"/>
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                android:id="@+id/tv_error"/>
-
-        <io.github.null2264.dicodingstories.widget.button.RoundedButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/retry"
-                android:layout_marginTop="24dp"
-                android:id="@+id/btn_retry"/>
-
-    </LinearLayout>
-
-    <!-- TODO(for sub2) - set to visible if filter is map only -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/new_story"
-            android:layout_marginBottom="16dp"
             android:src="@drawable/ic_map"
-            android:visibility="gone"
             app:tint="@color/white"
             app:backgroundTint="@color/gray_200"
             app:layout_constraintStart_toStartOf="@id/btn_new_story"
             app:layout_constraintEnd_toEndOf="@id/btn_new_story"
-            app:layout_constraintBottom_toTopOf="@id/btn_new_story"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_new_story"
             app:fabSize="mini"
             app:maxImageSize="18dp"
-            tools:visibility="visible"
             android:id="@+id/btn_map"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -109,4 +104,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:maxImageSize="32dp"
             android:id="@+id/btn_new_story"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

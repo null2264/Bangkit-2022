@@ -1,0 +1,96 @@
+{
+  "error": false,
+  "message": "Stories fetched successfully",
+  "listStory": [
+    {
+      "id": "story-GLiS_K7ztl4amprB",
+      "name": "bintang",
+      "description": "hehehe",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024683157_8P8vuBn9.jpg",
+      "createdAt": "2022-04-27T01:58:03.160Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-fypSVs1EObIL9zfI",
+      "name": "Doni Hadimas",
+      "description": "\"fdsfddfsdfds\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024653785_nE0G1LTr.jpg",
+      "createdAt": "2022-04-27T01:57:33.786Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-9dMCpt6hyny0zoV_",
+      "name": "rudi123",
+      "description": "bsjsubsb",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024582034_HOmDPMyZ.jpg",
+      "createdAt": "2022-04-27T01:56:22.035Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-Pd0sqkP7s66rFXFf",
+      "name": "Doni Hadimas",
+      "description": "\"dsadsadsadsadsa\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024526103_iLv0w0_7.jpg",
+      "createdAt": "2022-04-27T01:55:26.104Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-hIyxJuaBnRBS4FKZ",
+      "name": "Doni Hadimas",
+      "description": "\"sdadasdsadasdas\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024477759_3k8a5e_A.jpg",
+      "createdAt": "2022-04-27T01:54:37.759Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-0pYWtbvwLF8tZBre",
+      "name": "Doni Hadimas",
+      "description": "\"dsadsadsa\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024458566_kT9AIvoS.jpg",
+      "createdAt": "2022-04-27T01:54:18.567Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-Vr3eAJy78VD-ttaO",
+      "name": "Doni Hadimas",
+      "description": "\"sdfasdfsfdsf\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024434262_VgBmMKNW.jpg",
+      "createdAt": "2022-04-27T01:53:54.263Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-Y1DU7_EFeaIz8ULR",
+      "name": "Doni Hadimas",
+      "description": "\"sdfasdfsfdsf\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024421743_9pv853e1.jpg",
+      "createdAt": "2022-04-27T01:53:41.744Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-gyu2a0NggSzYEaDz",
+      "name": "Doni Hadimas",
+      "description": "\"texxasxsads\"",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024157472_feKibuRe.jpg",
+      "createdAt": "2022-04-27T01:49:17.473Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-PiJihUTRfkSZtxx6",
+      "name": "poiu",
+      "description": "a",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1651024044081_Cx2YiiwY.jpg",
+      "createdAt": "2022-04-27T01:47:24.082Z",
+      "lat": null,
+      "lon": null
+    }
+  ]
+}

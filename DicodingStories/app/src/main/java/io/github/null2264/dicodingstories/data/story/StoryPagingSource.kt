@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import io.github.null2264.dicodingstories.data.api.ApiService
 import io.github.null2264.dicodingstories.data.model.Story
+import io.github.null2264.dicodingstories.lib.wrapEspressoIdlingResource
 
 class StoryPagingSource(
     private val service: ApiService,
@@ -11,22 +12,25 @@ class StoryPagingSource(
 ) : PagingSource<Int, Story>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Story> {
         val pos = params.key ?: INITIAL_PAGE_INDEX
-        return try {
-            val locationOnly = filter?.locationOnly ?: false
-            val resp = service.getStories(
-                pos,
-                params.loadSize,
-                if (locationOnly) 1 else 0
-            )
 
-            val repos = resp.body()!!.listStory
-            LoadResult.Page(
-                data = repos,
-                prevKey = if (pos == INITIAL_PAGE_INDEX) null else pos - 1,
-                nextKey = if (repos.isEmpty()) null else pos + 1
-            )
-        } catch (exc: Exception) {
-            LoadResult.Error(exc)
+        return wrapEspressoIdlingResource {
+            try {
+                val locationOnly = filter?.locationOnly ?: false
+                val resp = service.getStories(
+                    pos,
+                    params.loadSize,
+                    if (locationOnly) 1 else 0
+                )
+
+                val data = resp.body()!!.listStory
+                LoadResult.Page(
+                    data = data,
+                    prevKey = if (pos == INITIAL_PAGE_INDEX) null else pos - 1,
+                    nextKey = if (data.isEmpty()) null else pos + 1
+                )
+            } catch (exc: Exception) {
+                LoadResult.Error(exc)
+            }
         }
     }
 

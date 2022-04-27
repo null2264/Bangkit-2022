@@ -28,7 +28,7 @@ import java.io.InputStream
 import java.util.*
 
 object Common {
-    const val API_URL = "https://story-api.dicoding.dev/v1/"
+    var API_URL = "https://story-api.dicoding.dev/v1/"
 
     val timeStamp: String = SimpleDateFormat(
         "dd-MMM-yyyy",

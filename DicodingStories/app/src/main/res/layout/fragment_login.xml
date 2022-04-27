@@ -21,6 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="TouchTargetSizeCheck"
+            tools:visibility="visible"
             android:id="@+id/btn_language_selector"/>
 
     <ImageView

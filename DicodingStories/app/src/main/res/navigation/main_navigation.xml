@@ -12,7 +12,7 @@
         <action
                 android:id="@+id/action_login_to_dashboard"
                 app:destination="@id/dashboardFragment"
-                app:popUpTo="@id/dashboardFragment"
+                app:popUpTo="@id/loginFragment"
                 app:popUpToInclusive="true"/>
     </fragment>
     <fragment
@@ -25,6 +25,9 @@
         <action
                 android:id="@+id/action_add_new_story"
                 app:destination="@id/newStoryFragment"/>
+        <action
+                android:id="@+id/action_dashboard_to_maps"
+                app:destination="@id/mapsFragment"/>
     </fragment>
     <fragment
             android:id="@+id/registerFragment"
@@ -44,4 +47,13 @@
             android:name="io.github.null2264.dicodingstories.ui.story.NewStoryFragment"
             android:label="fragment_new_story"
             tools:layout="@layout/fragment_new_story"/>
+    <fragment
+            android:id="@+id/mapsFragment"
+            android:name="io.github.null2264.dicodingstories.ui.story.MapsFragment"
+            android:label="fragment_maps"
+            tools:layout="@layout/fragment_maps">
+        <argument
+                android:name="stories"
+                app:argType="io.github.null2264.dicodingstories.data.model.Story[]"/>
+    </fragment>
 </navigation>

@@ -118,7 +118,7 @@ class CameraActivity : AppCompatActivity() {
                         "isBackCamera",
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
                     )
-                    setResult(NewStoryFragment.CAMERA_X_RESULT, intent)
+                    setResult(NewStoryFragment.RESULT_SUCCESS, intent)
                     finish()
                 }
             }

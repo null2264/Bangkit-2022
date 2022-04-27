@@ -7,27 +7,33 @@
         android:layout_height="match_parent"
         tools:context=".ui.story.NewStoryFragment">
 
-    <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray_1000"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/white"
-            app:subtitleTextColor="@color/gray_200"
-            tools:title="test"
+    <include
+            layout="@layout/toolbar_actionbar"
             android:id="@+id/appbar"/>
+
+    <io.github.null2264.dicodingstories.widget.button.RoundedStrokeButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/location"
+            android:textColor="?android:attr/textColorHint"
+            android:layout_marginVertical="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/appbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/btn_location"/>
 
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/image_preview"
             android:layout_marginVertical="16dp"
-            android:layout_marginHorizontal="16dp"
             android:background="@color/cardViewBackground"
-            app:layout_constraintTop_toBottomOf="@id/appbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_location"
+            app:layout_constraintStart_toStartOf="@+id/btn_location"
+            app:layout_constraintEnd_toEndOf="@+id/btn_location"
             app:layout_constraintBottom_toTopOf="@id/btn_camera"
+            tools:layout_height="64dp"
             android:id="@+id/iv_preview"/>
 
     <io.github.null2264.dicodingstories.widget.button.RoundedButton
@@ -72,6 +78,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_preview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:buttonText="@string/upload"
+            tools:layout_height="48dp"
             android:id="@+id/btn_upload"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

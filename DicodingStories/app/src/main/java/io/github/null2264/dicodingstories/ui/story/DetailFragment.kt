@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -38,19 +39,31 @@ class DetailFragment : Fragment() {
             TransitionInflater.from(requireContext()).inflateTransition(R.transition.change_bounds)
         enterTransition = Explode()
         returnTransition = Slide()
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         postponeEnterTransition()
+
         val story = args.story
         binding.apply {
             val activity = (requireActivity() as AppCompatActivity)
-            activity.setSupportActionBar(appbar)
+            activity.setSupportActionBar(appbar.toolbar)
             activity.supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeButtonEnabled(true)
             }
-            appbar.setNavigationOnClickListener {
+            appbar.toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
             ivStory.transitionName = getString(R.string.transition_image_name, story.id)
+
+            if (story.lat != null && story.lon != null) {
+                tvLocation.isGone = false
+                tvLocation.text = StringBuilder("${story.lat}, ${story.lon}")
+            }
+
             tvAuthor.text = story.name
             tvDescription.text = story.description
             val dateTime = ZonedDateTime.parse(story.createdAt, DateTimeFormatter.ISO_DATE_TIME)
@@ -88,6 +101,5 @@ class DetailFragment : Fragment() {
             .onlyRetrieveFromCache(true)
             .listener(listener)
             .into(binding.ivStory)
-        return binding.root
     }
 }

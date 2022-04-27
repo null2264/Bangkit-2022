@@ -4,6 +4,7 @@ import android.content.Context
 import android.icu.util.TimeZone
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagingDataAdapter
@@ -31,6 +32,12 @@ class StoriesRecyclerAdapter(private val context: Context) :
                 Glide.with(itemView.context)
                     .load(story.photoUrl)
                     .into(ivStory)
+
+                if (story.lat != null && story.lon != null) {
+                    tvLocation.isGone = false
+                    tvLocation.text = StringBuilder("${story.lat}, ${story.lon}")
+                }
+
                 tvAuthor.text = story.name
                 tvDescription.text = story.description
                 val dateTime = ZonedDateTime.parse(story.createdAt, DateTimeFormatter.ISO_DATE_TIME)

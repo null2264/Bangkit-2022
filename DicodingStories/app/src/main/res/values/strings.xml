@@ -46,4 +46,10 @@
     <string name="logout">Log out</string>
     <string name="logout_prompt">Are you sure you want to log out?</string>
     <string name="retry">Retry</string>
+    <string name="filter">Filter</string>
+    <string name="location">Location</string>
+    <string name="none">None</string>
+    <string name="auto">Auto</string>
+    <string name="location_manual">Select from Map</string>
+    <string name="select">Select</string>
 </resources>
